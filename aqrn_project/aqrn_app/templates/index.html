@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="." method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="OK">
+</form>
+
+<div>
+
+    {% if city.reporting_area %}
+        Reporting area: {{ city.reporting_area }} <br />
+        AQI: {{ city.aqi}} <br />
+        Index of pollutant used for overall API: {{ city.aqi_index }} <br />
+        Category name: {{ city.cat_name }} <br />
+        Category number: {{ city.cat_num }} <br /><br />
+
+        <p>Full json report:</p>
+        {{ city.current_json }}
+    {% endif %}
+
+</div>
+
+{% endblock content %}

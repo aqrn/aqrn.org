@@ -1,0 +1,31 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Assistant', sans-serif;
+	line-height: 1.5;
+}
+
+.cat1 {
+	background: #3b7a3e;
+}
+
+.cat2 {
+	background: #aa9648;
+}
+
+.cat3 {
+	background: #9f6f3b;
+}
+
+.cat4 {
+	background: #9b3f3f;
+}
+
+.cat5 {
+	background: #5f3c66;
+}
+
+.cat6 {
+	background: #68212e;
+}
+
