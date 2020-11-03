@@ -23,7 +23,7 @@ def home(request):
                 raise Http404(e)
 
             if city is not None:
-                body_classes = 'cat'  # TODO: append appropriate cat number
+                body_classes = 'forecast cat' + str(city.max_cat)
                 return render(request, 'index.html', {
                     'form': form,
                     'zip_code': zip_code,

@@ -4,8 +4,7 @@ import requests
 from django.conf import settings
 
 
-def get_current_aq(zip_code):
-    today = datetime.today().strftime('%Y-%m-%d')
+def get_realtime_report(zip_code):
     resp_format = 'application/json'
     distance = 25
 
@@ -21,35 +20,59 @@ def get_current_aq(zip_code):
     return json_object
 
 
-def get_max_aqi(report):
-    max_aqi = -1
-    max_aqi_index = -1
-    for i in range(len(report)):
-        pollutant_aqi = report[i]["AQI"]
-        if pollutant_aqi > max_aqi:
-            max_aqi = pollutant_aqi
-            max_aqi_index = i
-    return max_aqi, max_aqi_index
-
-
 class City:
     def __init__(self, zip_code):
-        self.current_json = get_current_aq(zip_code)
+        self.realtime_json = get_realtime_report(zip_code)
+        self.max_aqi = -1
+        self.max_cat = -1
+        self.full_report = []
 
-        if len(self.current_json) < 1:
+        if len(self.realtime_json) < 1:
             return None
 
-        self.reporting_area = self.current_json[0]["ReportingArea"]
-
-        self.aqi, self.aqi_index = get_max_aqi(self.current_json)
-
-        # Get category name and number if they exist, else they will be set to None
-        self.cat_name = self.current_json[self.aqi_index]["Category"].get("Name")
-        self.cat_num = self.current_json[self.aqi_index]["Category"].get("Number")
-
-        # TODO: loop through self.current_json and generate self.full_report
-        # which is displayed below the form
-        # e.g. self.full_report = [[o2, o2 aqi, o2 cat], [pm2.5, pm2.5 aqi, pm2.5 cat]]
+        self.reporting_area = self.realtime_json[0]["ReportingArea"]
+        self.parse_realtime_report()
 
         # TODO: get historical data
         # and save as list of dates and AQI ratings
+
+    def parse_realtime_report(self):
+        cat_lookup = {
+            "Good": 1,
+            "Moderate": 2,
+            "Unhealthy for Sensitive Groups": 3,
+            "Unhealthy": 4,
+            "Very Unhealthy": 5,
+            "Hazardous": 6,
+            1: "Good",
+            2: "Moderate",
+            3: "Unhealthy for Sensitive Groups",
+            4: "Unhealthy",
+            5: "Very Unhealthy",
+            6: "Hazardous"
+        }
+
+        for i in range(len(self.realtime_json)):
+
+            pollutant = self.realtime_json[i]["ParameterName"]
+            pollutant_aqi = self.realtime_json[i]["AQI"]
+
+            cat_name = self.realtime_json[i]["Category"].get("Name")
+            cat_num = self.realtime_json[i]["Category"].get("Number")
+            if cat_name is None:
+                cat_name = cat_lookup[int(cat_num)]
+            if cat_num is None:
+                cat_num = cat_lookup[str(cat_name)]
+
+            # Modify category name
+            if cat_name == "Unhealthy for Sensitive Groups":
+                cat_name == "Mildly Unhealthy"
+
+            self.full_report.append({"pollutant": pollutant,
+                                     "pollutant_aqi": pollutant_aqi,
+                                     "cat_num": cat_num,
+                                     "cat_name": cat_name})
+
+            if pollutant_aqi > self.max_aqi:
+                self.max_aqi = pollutant_aqi
+                self.max_cat = cat_num

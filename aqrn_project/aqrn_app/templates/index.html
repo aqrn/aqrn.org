@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    {% if city.max_aqi %}
+        <div id="overall-aqi">{{ city.max_aqi}}</div>
+    {% endif %}
+
 <form action="." method="post">
     {% csrf_token %}
     {{ form }}
@@ -11,13 +16,15 @@
 
     {% if city.reporting_area %}
         Reporting area: {{ city.reporting_area }} <br />
-        AQI: {{ city.aqi}} <br />
-        Index of pollutant used for overall API: {{ city.aqi_index }} <br />
-        Category name: {{ city.cat_name }} <br />
-        Category number: {{ city.cat_num }} <br /><br />
 
-        <p>Full json report:</p>
-        {{ city.current_json }}
+        <ul id="full-report">
+        {% for x in city.full_report %}
+            <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
+        {% endfor %}
+        </ul>
+
+{#        <p>Full json report:</p>#}
+{#        {{ city.realtime_json }}#}
     {% endif %}
 
 </div>
