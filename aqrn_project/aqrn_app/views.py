@@ -22,13 +22,17 @@ def home(request):
             except Exception as e:
                 raise Http404(e)
 
-            if city is not None:
+            if city.max_aqi != -1:
                 body_classes = 'forecast cat' + str(city.max_cat)
                 return render(request, 'index.html', {
                     'form': form,
                     'zip_code': zip_code,
                     'city': city,
                     'body_classes': body_classes,
+                })
+            else:
+                return render(request, 'index.html', {
+                    'form': form
                 })
 
     else:
