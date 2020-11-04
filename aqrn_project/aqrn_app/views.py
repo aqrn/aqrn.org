@@ -7,15 +7,18 @@ from .forms import ZipCodeForm
 from django.http import Http404
 
 
-def home(request):
+def home(request, zip_param=None):
     # Process form data if POST request
     populated_city_reports = get_populated_city_reports()
-    if request.method == 'POST':
+    if request.method == 'POST' or zip_param is not None:
+        if request.method == 'POST':
+            form = ZipCodeForm(request.POST)
+            if form.is_valid():
+                zip_code = form.cleaned_data['zip_code']
+        else:
+            form = ZipCodeForm(initial={'zip_code': zip_param})
+            zip_code = zip_param
 
-        form = ZipCodeForm(request.POST)
-
-        if form.is_valid():
-            zip_code = form.cleaned_data['zip_code']
 
             try:
                 city = City(zip_code)
