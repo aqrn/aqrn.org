@@ -1,6 +1,8 @@
+from typing import List
+
 from django.shortcuts import render
 from django.http import HttpResponse
-from .services import City
+from .services import City, get_top_10_reports
 from .forms import ZipCodeForm
 from django.http import Http404
 
@@ -8,6 +10,7 @@ from django.http import Http404
 def home(request):
     # report = get_current_aq(98121)
     # return HttpResponse(report, content_type='application_json')
+    top_10_reports = get_top_10_reports()
 
     # Process form data if POST request
     if request.method == 'POST':
@@ -29,13 +32,15 @@ def home(request):
                     'zip_code': zip_code,
                     'city': city,
                     'body_classes': body_classes,
+                    'top_10_reports': get_top_10_reports()
                 })
             else:
                 return render(request, 'index.html', {
-                    'form': form
+                    'form': form, 'top_10_reports': get_top_10_reports()
                 })
 
     else:
         form = ZipCodeForm()
 
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', {'form': form, 'top_10_reports': get_top_10_reports()})
+

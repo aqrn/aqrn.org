@@ -4,6 +4,15 @@ import requests
 from django.conf import settings
 
 
+def get_top_10_reports():
+    zip_codes = [10001, 90001]
+    top_10 = []
+    for zip in zip_codes:
+        top_10.append(City(zip))
+
+    return top_10
+
+
 def get_realtime_report(zip_code):
     resp_format = 'application/json'
     distance = 25
@@ -35,6 +44,9 @@ class City:
 
         # TODO: get historical data
         # and save as list of dates and AQI ratings
+
+    def str_max_cat(self):
+        return "cat" + str(self.max_cat)
 
     def parse_realtime_report(self):
         cat_lookup = {
