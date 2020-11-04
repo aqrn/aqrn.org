@@ -4,13 +4,10 @@ import requests
 from django.conf import settings
 
 
-def get_top_10_reports():
-    zip_codes = [10001, 90001, 60007, 77001, 19019, 85001, 91945, 78006, 75001, 94088]
-    top_10 = []
-    for zip_code in zip_codes:
-        top_10.append(City(zip_code))
-
-    return top_10
+def get_populated_city_reports():
+    # zip_codes = [10001, 90001, 60007, 77001, 19019, 85001, 91945, 78006, 75001, 94088]
+    zip_codes = [10001, 90001, 60007, 77001, 19019]
+    return [City(zip_code) for zip_code in zip_codes]
 
 
 def get_realtime_report(zip_code):

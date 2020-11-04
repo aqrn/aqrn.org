@@ -30,8 +30,8 @@
 </div>
 
 <div>
-    <ul id="top-10">
-        {% for x in top_10_reports %}
+    <ul id="populated-cities">
+        {% for x in populated_city_reports %}
             <li><span><a class="cat{{ x.max_cat }}" href="#">{{ x.reporting_area }} {{ x.max_aqi }}</a></span></li>
         {% endfor %}
     </ul>
