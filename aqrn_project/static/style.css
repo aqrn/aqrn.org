@@ -2,8 +2,8 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-family: 'Assistant', sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
 	line-height: 1.5;
     font-size: 18px;
 	background: #e5e5e5;
@@ -12,24 +12,43 @@ body {
 body.forecast {
 	color: #fff;
 }
+input#id_zip_code::placeholder {
+    color: #ccc;
+}
+
 input#id_zip_code {
-    color: #fff;
-    background: rgba(0,0,0,.1);
+    color: #111;
+    background: none;
     border: none;
     border-bottom: 3px solid rgba(0, 0 ,0, .3);
-    font-size: 2em;
+    font-size: 3em;
     text-align: center;
+    font-family: 'Roboto Thin';
+    padding: .25em 0;
 }
+
+input#id_zip_code:focus {
+    background: rgba(200,200,200,.15);
+    outline: none;
+}
+
+input[type="submit"] {
+    display: none;
+}
+
+.forecast input#id_zip_code:focus {
+    background: rgba(150,150,150,.1)
+}
+
 .forecast input#id_zip_code {
     color: #fff;
-    background: none;
     border: none;
     border-bottom: 3px solid rgba(255, 255, 255, .3);
 }
 
 #site-branding h1 {
     padding: .25em 2.5%;
-    font-weight: 300;
+    font-weight: 100;
     margin: 0;
 }
 
@@ -63,7 +82,7 @@ ul#full-report {
 }
 
 ul#full-report span {
-    font-weight: 700;
+    font-weight: 300;
 }
 
 div#overall-aqi {
@@ -104,6 +123,7 @@ ul#populated-cities li a:hover {
 form {
     text-align: center;
 }
+
 form label {
     display: none;
 }
