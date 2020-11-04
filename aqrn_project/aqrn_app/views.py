@@ -29,7 +29,8 @@ def home(request):
                     'zip_code': zip_code,
                     'city': city,
                     'body_classes': body_classes,
-                    'populated_city_reports': populated_city_reports
+                    'populated_city_reports': populated_city_reports,
+                    #'historical_report': city.get_historical_report()
                 })
             else:
                 return render(request, 'index.html', {
