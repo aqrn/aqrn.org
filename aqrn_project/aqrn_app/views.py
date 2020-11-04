@@ -9,6 +9,7 @@ from django.http import Http404
 
 def home(request):
     # Process form data if POST request
+    populated_city_reports = get_populated_city_reports()
     if request.method == 'POST':
 
         form = ZipCodeForm(request.POST)
@@ -28,15 +29,19 @@ def home(request):
                     'zip_code': zip_code,
                     'city': city,
                     'body_classes': body_classes,
-                    'populated_city_reports': get_populated_city_reports()
+                    'populated_city_reports': populated_city_reports
                 })
             else:
                 return render(request, 'index.html', {
                     'form': form,
+                    'populated_city_reports': populated_city_reports
                 })
 
     else:
         form = ZipCodeForm()
 
-    return render(request, 'index.html', {'form': form, 'top_10_reports': get_top_10_reports()})
+    return render(request, 'index.html', {
+        'form': form,
+        'populated_city_reports': populated_city_reports
+    })
 
