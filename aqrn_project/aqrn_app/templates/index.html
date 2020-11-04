@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+<h1 id="site-title">aqrn</h1>
+
 {% block content %}
 
     {% if city.max_aqi %}
@@ -15,7 +17,7 @@
 <div>
 
     {% if city.reporting_area %}
-        Reporting area: {{ city.reporting_area }} <br />
+        <p id="reporting-area">{{ city.reporting_area }}</p>
 
         <ul id="full-report">
         {% for x in city.full_report %}
@@ -23,8 +25,6 @@
         {% endfor %}
         </ul>
 
-{#        <p>Full json report:</p>#}
-{#        {{ city.realtime_json }}#}
     {% endif %}
 
 </div>
@@ -32,7 +32,7 @@
 <div>
     <ul id="populated-cities">
         {% for x in populated_city_reports %}
-            <li><span><a class="cat{{ x.max_cat }}" href="#">{{ x.reporting_area }} {{ x.max_aqi }}</a></span></li>
+            <li><a class="cat{{ x.max_cat }}" href="#">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a></li>
         {% endfor %}
     </ul>
 </div>

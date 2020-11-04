@@ -7,8 +7,12 @@
         <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" media="all">
         <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;600&display=swap" rel="stylesheet"> 
        </head>
-    <h1>aqrn</h1>
     <body class="{{ body_classes }}">
+
+        <div id="site-branding">
+               <h1>aqrn</h1>
+        </div>
+
         <div id="content">
             {% block content %}
             {% endblock content %}
