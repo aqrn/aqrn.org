@@ -32,6 +32,7 @@ class City:
         self.max_aqi = -1
         self.max_cat = -1
         self.full_report = []
+        self.zip_code = zip_code
 
         if len(self.realtime_json) < 1:
             return None
