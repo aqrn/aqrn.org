@@ -1,139 +1,172 @@
-
+/* SASS Variables */
 body {
-	margin: 0;
-	padding: 0;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100;
-	line-height: 1.5;
-    font-size: 18px;
-	background: #e5e5e5;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  line-height: 1.5;
+  font-size: 18px;
+  background: #e5e5e5;
 }
 
 body.forecast {
-	color: #fff;
+  color: #fff;
 }
+
 input#id_zip_code::placeholder {
-    color: #ccc;
+  color: #ccc;
 }
 
 input#id_zip_code {
-    color: #111;
-    background: none;
-    border: none;
-    border-bottom: 3px solid rgba(0, 0 ,0, .3);
-    font-size: 3em;
-    text-align: center;
-    font-family: 'Roboto Thin';
-    padding: .25em 0;
+  color: #111;
+  background: none;
+  border: none;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+  font-size: 3em;
+  text-align: center;
+  font-family: "Roboto Thin";
+  padding: 0.25em 0;
+  max-width: 95%;
 }
 
 input#id_zip_code:focus {
-    background: rgba(200,200,200,.15);
-    outline: none;
+  background: rgba(200, 200, 200, 0.15);
+  outline: none;
 }
 
-input[type="submit"] {
-    display: none;
+input[type=submit] {
+  display: none;
 }
 
 .forecast input#id_zip_code:focus {
-    background: rgba(150,150,150,.1)
+  background: rgba(150, 150, 150, 0.1);
 }
 
 .forecast input#id_zip_code {
-    color: #fff;
-    border: none;
-    border-bottom: 3px solid rgba(255, 255, 255, .3);
+  color: #fff;
+  border: none;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 #site-branding h1 {
-    padding: .25em 2.5%;
-    font-weight: 100;
-    margin: 0;
+  padding: 0.25em 2.5%;
+  font-weight: 100;
+  margin: 0;
 }
 
 .cat1 {
-	background: #3b7a3e;
+  background: #3b7a3e;
 }
 
 .cat2 {
-	background: #aa9648;
+  background: #aa9648;
 }
 
 .cat3 {
-	background: #9f6f3b;
+  background: #9f6f3b;
 }
 
 .cat4 {
-	background: #9b3f3f;
+  background: #9b3f3f;
 }
 
 .cat5 {
-	background: #5f3c66;
+  background: #5f3c66;
 }
 
 .cat6 {
-	background: #68212e;
+  background: #68212e;
 }
 
 ul#full-report {
-    list-style: none;
-    padding: 2.5%;
+  list-style: none;
+  padding: 2.5%;
 }
 
 ul#full-report span {
-    font-weight: 300;
+  font-weight: 300;
 }
 
-div#overall-aqi {
-    font-size: 800%;
-    text-align: center;
-    margin-bottom: .25em;
-    line-height: 1em;
+div#overall-aqi p {
+  font-size: 800%;
+  text-align: center;
+  line-height: 1em;
+  margin: 0 0 0.25em 0;
 }
 
 ul#populated-cities {
-    list-style: none;
-    text-align: center;
-    padding: 0;
-    background: #e5e5e5;
-    margin-top: 5em;
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  background: #e5e5e5;
+  margin-top: 5em;
 }
 
 ul#populated-cities li a {
-    color: #fff;
-    text-decoration: none;
-    width: 100%;
-    padding: 1em;
-    box-sizing: border-box;
-    display: block;
-    transition: opacity .2s ease-in-out;
-    opacity: .95;
-    text-align: center;
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+  display: block;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0.95;
+  text-align: center;
 }
 
 ul#populated-cities li a span {
-    font-weight: 600;
+  font-weight: 600;
+}
+
+ul#populated-cities li.cat1 {
+  border-color: rgba(59, 122, 62, 0.98);
+}
+
+ul#populated-cities li.cat2 {
+  border-color: rgba(170, 150, 72, 0.98);
+}
+
+ul#populated-cities li.cat3 {
+  border-color: rgba(159, 111, 59, 0.98);
+}
+
+ul#populated-cities li.cat4 {
+  border-color: rgba(155, 63, 63, 0.98);
+}
+
+ul#populated-cities li.cat5 {
+  border-color: rgba(95, 60, 102, 0.98);
+}
+
+ul#populated-cities li.cat6 {
+  border-color: rgba(104, 33, 46, 0.98);
+}
+
+ul#populated-cities li {
+  border-top: 2px solid;
+  background: none;
 }
 
 ul#populated-cities li a:hover {
-    opacity: .9;
+  opacity: 0.9;
 }
 
 form {
-    text-align: center;
+  text-align: center;
 }
 
 form label {
-    display: none;
+  display: none;
 }
 
 p#reporting-area {
-    text-align: center;
+  text-align: center;
 }
 
 ul#full-report {
-    max-width: 600px;
-    padding: 0 2.5%;
-    margin: 0 auto;
+  max-width: 600px;
+  padding: 0 2.5%;
+  margin: 0 auto;
 }
+
+/*# sourceMappingURL=style.css.map */

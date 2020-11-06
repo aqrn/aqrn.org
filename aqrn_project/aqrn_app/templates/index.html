@@ -3,11 +3,16 @@
 <h1 id="site-title">aqrn</h1>
 
 {% block content %}
-
+<div id="overall-aqi">
+<p>
     {% if city.max_aqi %}
-        <div id="overall-aqi">{{ city.max_aqi}}</div>
+        {{ city.max_aqi}}
+    {% else %}
+        {# Add non-breaking space to maintain vertical space?  #}
+        {# &nbsp;#}
     {% endif %}
-
+</p>
+</div>
 <form action="." method="post">
     {% csrf_token %}
     {{ form }}
@@ -32,7 +37,7 @@
 <div>
     <ul id="populated-cities">
         {% for x in populated_city_reports %}
-            <li><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a></li>
+            <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a></li>
         {% endfor %}
     </ul>
 </div>
