@@ -40,12 +40,6 @@ class City:
         self.reporting_area = self.realtime_json[0]["ReportingArea"]
         self.parse_realtime_report()
 
-        # TODO: get historical data
-        # and save as list of dates and AQI ratings
-
-    def str_max_cat(self):
-        return "cat" + str(self.max_cat)
-
     def parse_realtime_report(self):
         cat_lookup = {
             "Good": 1,
@@ -76,7 +70,7 @@ class City:
 
             # Modify category name
             if cat_name == "Unhealthy for Sensitive Groups":
-                cat_name == "Mildly Unhealthy"
+                cat_name = "Mildly Unhealthy"
 
             self.full_report.append({"pollutant": pollutant,
                                      "pollutant_aqi": pollutant_aqi,
@@ -86,3 +80,6 @@ class City:
             if pollutant_aqi > self.max_aqi:
                 self.max_aqi = pollutant_aqi
                 self.max_cat = cat_num
+
+        def get_historical_report():
+            pass

@@ -18,6 +18,11 @@
             {% endblock content %}
         </div>
 
-        <script src="{% static 'main.js' %}"></script>
+        <footer>
+            {% block footer %}
+            {% endblock footer %}
+        </footer>
+
+{#        <script src="{% static 'main.js' %}"></script>#}
     </body>
 </html>
