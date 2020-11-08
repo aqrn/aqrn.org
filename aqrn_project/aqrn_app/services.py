@@ -1,13 +1,19 @@
 import json
 from datetime import datetime
 import requests
+import requests_cache
 from django.conf import settings
 
+requests_cache.install_cache(cache_name='air_now_cache', expire_after=1800)
 
-def get_populated_city_reports():
-    # zip_codes = [10001, 90001, 60007, 77001, 19019, 85001, 91945, 78006, 75001, 94088]
-    zip_codes = [10001, 90001, 60007, 77001, 19019]
-    return [City(zip_code) for zip_code in zip_codes]
+
+def get_populated_city_reports(main_city=None):
+    zip_codes = [10001, 90001, 60007, 77001, 19019, 85001, 91945, 78006, 75001, 94088, 78701]
+    if main_city is not None:
+        return [City(zip_code) for zip_code in zip_codes if (zip_code != main_city.zip_code)]
+    else:
+        return [City(zip_code) for zip_code in zip_codes]
+
 
 
 def get_realtime_report(zip_code):
@@ -23,16 +29,16 @@ def get_realtime_report(zip_code):
 
     json_object = json.loads(r.text)
 
-    return json_object
+    return json_object, r.from_cache
 
 
 class City:
     def __init__(self, zip_code):
-        self.realtime_json = get_realtime_report(zip_code)
+        self.realtime_json, self.used_cache = get_realtime_report(zip_code)
         self.max_aqi = -1
         self.max_cat = -1
         self.full_report = []
-        self.zip_code = zip_code
+        self.zip_code = int(zip_code)
 
         if len(self.realtime_json) < 1:
             return None

@@ -9,8 +9,6 @@ from django.http import Http404
 
 def home(request, zip_param=None):
 
-    populated_city_reports = get_populated_city_reports()
-
     # Process form data if POST request or zip is passed via URL
     if request.method == 'POST' or zip_param is not None:
 
@@ -33,13 +31,13 @@ def home(request, zip_param=None):
                 'form': form,
                 'city': city,
                 'body_classes': body_classes,
-                'populated_city_reports': populated_city_reports,
+                'populated_city_reports': get_populated_city_reports(city),
                 #'historical_report': city.get_historical_report()
             })
         else:
             return render(request, 'index.html', {
                 'form': form,
-                'populated_city_reports': populated_city_reports
+                'populated_city_reports': get_populated_city_reports()
             })
 
     else:
@@ -47,6 +45,6 @@ def home(request, zip_param=None):
 
     return render(request, 'index.html', {
         'form': form,
-        'populated_city_reports': populated_city_reports
+        'populated_city_reports': get_populated_city_reports()
     })
 
