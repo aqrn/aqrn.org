@@ -59,7 +59,7 @@ input[type=submit] {
   text-decoration: none;
 }
 
-.forecast #site-branding a, .forecast a:visited {
+.forecast #site-branding a, .forecast #site-branding a:visited {
   color: #fff;
 }
 
@@ -188,7 +188,7 @@ footer p {
   color: #111;
 }
 
-footer a {
+footer a, footer a:visited {
   color: #2f5bac;
 }
 
