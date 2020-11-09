@@ -32,7 +32,7 @@ def home(request, zip_param=None):
                 'city': city,
                 'body_classes': body_classes,
                 'populated_city_reports': get_populated_city_reports(city),
-                #'historical_report': city.get_historical_report()
+                'historical_report': city.get_historical_report()
             })
         else:
             return render(request, 'index.html', {
