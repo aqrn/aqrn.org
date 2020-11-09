@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-<h1 id="site-title">aqrn</h1>
-
 {% block content %}
 <div id="overall-aqi">
 <p>
@@ -19,32 +17,31 @@
     <input type="submit" value="OK">
 </form>
 
-<div>
+<main>
 
     {% if city.reporting_area %}
         <p id="reporting-area">{{ city.reporting_area }}</p>
-
         <ul id="full-report">
         {% for x in city.full_report %}
             <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
         {% endfor %}
         </ul>
 
+        {% for x in historical_report %}
+            <p>{{ x }}</p>
+        {% endfor %}
+
     {% endif %}
 
-</div>
+</main>
 
 <div>
     <ul id="populated-cities">
         {% for x in populated_city_reports %}
-            <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a></li>
+            <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a> </li>
         {% endfor %}
     </ul>
 </div>
 
 {% endblock content %}
 
-
-{% block footer %}
-    <p>All data provided by the <a href="https://docs.airnowapi.org/" name="U.S. EPA">United States EPA</a></p>
-{% endblock footer %}

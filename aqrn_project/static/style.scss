@@ -25,8 +25,10 @@ body {
 body.forecast {
 	color: #fff;
 }
-input#id_zip_code::placeholder {
-    color: #ccc;
+
+footer, ul#populated-cities li a, #site-branding {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
 }
 
 input#id_zip_code {
@@ -36,10 +38,14 @@ input#id_zip_code {
     border-bottom: 3px solid rgba(0, 0 ,0, .3);
     font-size: 3em;
     text-align: center;
-    font-family: 'Roboto Thin';
+    font-family: 'Roboto Thin', sans-serif;
     padding: .25em 0;
     max-width: 5em;
 
+}
+
+input#id_zip_code::placeholder {
+    color: #ccc;
 }
 
 input#id_zip_code:focus {
@@ -62,7 +68,8 @@ input[type="submit"] {
 }
 
 #site-branding a h1 {
-    padding: .25em 2.5%;
+    padding-top: .25em;
+    padding-bottom: .25em;
     font-weight: 100;
     margin: 0;
 }
@@ -101,10 +108,9 @@ input[type="submit"] {
 }
 
 
-
 ul#full-report {
     list-style: none;
-    padding: 2.5%;
+    padding: 0;
 }
 
 ul#full-report span {
@@ -170,14 +176,15 @@ p#reporting-area {
     text-align: center;
 }
 
-ul#full-report {
+main {
     max-width: 600px;
-    padding: 0 2.5%;
     margin: 0 auto;
+    padding: 0 2.5%;
 }
 
 footer {
-    padding: 1.5em 2.5%;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
     background-color: $bg-color;
 }
 

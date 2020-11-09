@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Secret key in local_settings.py
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Debug setting in local_settings.py
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition

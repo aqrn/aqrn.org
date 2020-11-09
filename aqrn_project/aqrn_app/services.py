@@ -4,7 +4,7 @@ import requests
 import requests_cache
 from django.conf import settings
 
-requests_cache.install_cache(cache_name='air_now_cache', expire_after=1800)
+requests_cache.install_cache(cache_name="air_now_cache", expire_after=3600)
 
 
 def get_populated_city_reports(main_city=None):
@@ -15,14 +15,13 @@ def get_populated_city_reports(main_city=None):
         return [City(zip_code) for zip_code in zip_codes]
 
 
-
 def get_realtime_report(zip_code):
-    resp_format = 'application/json'
+    resp_format = "application/json"
     distance = 25
 
-    url = 'http://www.airnowapi.org/aq/observation/zipCode/current?'
-    query_vars = f'format={resp_format}&zipCode={zip_code}' \
-                 f'&distance={distance}&API_KEY={settings.AIR_NOW_API_KEY}'
+    url = "http://www.airnowapi.org/aq/observation/zipCode/current?"
+    query_vars = f"format={resp_format}&zipCode={zip_code}" \
+                 f"&distance={distance}&API_KEY={settings.AIR_NOW_API_KEY}"
 
     query_url = url + query_vars
     r = requests.get(query_url)
@@ -30,6 +29,40 @@ def get_realtime_report(zip_code):
     json_object = json.loads(r.text)
 
     return json_object, r.from_cache
+
+
+def get_historical_report(zip_code):
+    historical_report = []
+
+    resp_format = "application/json"
+    distance = 25
+    url = "https://www.airnowapi.org/aq/observation/zipCode/historical/?"
+
+    # Get reports from recent days
+    for x in range(1, 6):
+        report_date = (datetime.today() - timedelta(days=x)).strftime("%Y-%m-%d")
+        query_vars = f"format={resp_format}&zipCode={zip_code}&date={report_date}T00-0000" \
+                     f"&distance={distance}&API_KEY={settings.AIR_NOW_API_KEY}"
+        query_url = url + query_vars
+        r = requests.get(query_url)
+        report = json.loads(r.text)
+
+        # Determine overall AQI value to use for report date
+        # by cycling through each pollutant and finding the maximum
+        max_aqi = -1
+        for i in range(len(report)):
+            pollutant_aqi = report[i]["AQI"]
+            if pollutant_aqi > max_aqi:
+                max_aqi = pollutant_aqi
+
+        # Quit if AQI values are not in report
+        if max_aqi == -1:
+            return None
+        else:
+            historical_report += [[report_date, max_aqi, r.from_cache]]
+
+    historical_report.reverse()
+    return historical_report
 
 
 class City:
@@ -87,28 +120,4 @@ class City:
                 self.max_aqi = pollutant_aqi
                 self.max_cat = cat_num
 
-    # def get_historical_report(self):
-    #     historical_report = []
-    #     resp_format = 'application/json'
-    #     distance = 25
-    #     for x in range(8):
-    #         date = datetime.now() - timedelta(days=x)
-    #         dateStr = datetime.strptime(date, "%Y-%m-%d")
-    #
-    #         url = 'https://www.airnowapi.org/aq/observation/zipCode/historical/?'
-    #         query_vars = f'format={resp_format}&zipCode={self.zip_code}&date={dateStr}' \
-    #                          f'&distance={distance}&API_KEY={settings.AIR_NOW_API_KEY}'
-    #
-    #         query_url = url + query_vars
-    #         r = requests.get(query_url)
-    #
-    #         historic_json = json.loads(r.text)
-    #
-    #         for i in range(len(historic_json)):
-    #             pollutant_aqi = historic_json[i]["AQI"]
-    #             cat_num = historic_json[i]["Category"].get("Number")
-    #
-    #             if cat_num == self.max_cat:
-    #                 historical_report.insert(0, [dateStr, pollutant_aqi])
-    #
-    #     return historical_report
+
