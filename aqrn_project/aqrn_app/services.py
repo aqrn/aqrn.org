@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import requests_cache
 from django.conf import settings
@@ -87,5 +87,28 @@ class City:
                 self.max_aqi = pollutant_aqi
                 self.max_cat = cat_num
 
-        def get_historical_report():
-            pass
+    # def get_historical_report(self):
+    #     historical_report = []
+    #     resp_format = 'application/json'
+    #     distance = 25
+    #     for x in range(8):
+    #         date = datetime.now() - timedelta(days=x)
+    #         dateStr = datetime.strptime(date, "%Y-%m-%d")
+    #
+    #         url = 'https://www.airnowapi.org/aq/observation/zipCode/historical/?'
+    #         query_vars = f'format={resp_format}&zipCode={self.zip_code}&date={dateStr}' \
+    #                          f'&distance={distance}&API_KEY={settings.AIR_NOW_API_KEY}'
+    #
+    #         query_url = url + query_vars
+    #         r = requests.get(query_url)
+    #
+    #         historic_json = json.loads(r.text)
+    #
+    #         for i in range(len(historic_json)):
+    #             pollutant_aqi = historic_json[i]["AQI"]
+    #             cat_num = historic_json[i]["Category"].get("Number")
+    #
+    #             if cat_num == self.max_cat:
+    #                 historical_report.insert(0, [dateStr, pollutant_aqi])
+    #
+    #     return historical_report
