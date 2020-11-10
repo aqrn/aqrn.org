@@ -28,6 +28,12 @@ def get_realtime_report(zip_code):
 
     json_object = json.loads(r.text)
 
+    #Dummy Json codes to test parse_realtime_report to ensure that "Unhealthy for Sensitive Groups is changed
+    # to "Mildly Unhealthy"
+    #json_object = json.loads('[{"DateObserved":"2020-11-10 ","HourObserved":8,"LocalTimeZone":"EST", \
+                               # "ReportingArea":"New York City Region","StateCode":"NY","Latitude":40.8419,"Longitude":-73.8359,\
+                               # "ParameterName":"O3","AQI":9,"Category":{"Number":3,"Name":"Unhealthy for Sensitive Groups"}}]')
+
     return json_object, r.from_cache
 
 
