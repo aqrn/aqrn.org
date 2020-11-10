@@ -211,12 +211,11 @@ form label {
   display: none;
 }
 
-p#reporting-area {
+section#data p {
   text-align: center;
 }
 
 p#no-result {
-  text-align: center;
   color: #68212e;
   font-weight: 300;
 }
