@@ -1,65 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <section id="data">
+        {% autoescape off %}
+            {{ color_key }}
+        {% endautoescape %}
 
-{% autoescape off %}
-    {{ color_key }}
-{% endautoescape %}
+        <div id="overall-aqi">
+            <p>
+                {% if city.max_aqi %}
+                    {{ city.max_aqi}}
+                {% else %}
+                    {# Add non-breaking space to maintain vertical space?  #}
+                     &nbsp;
+                {% endif %}
+            </p>
+        </div>
 
-<div id="overall-aqi">
-<p>
-    {% if city.max_aqi %}
-        {{ city.max_aqi}}
-    {% else %}
-        {# Add non-breaking space to maintain vertical space?  #}
-        {# &nbsp;#}
-    {% endif %}
-</p>
-</div>
-<form action="." method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
-</form>
+        <form action="." method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="OK">
+        </form>
 
-<main>
+        {% if no_result %}
+            <p id="no-result">{{ no_result }}</p>
+        {% else %}
+            <p id="reporting-area">{{ city.reporting_area }}</p>
+            <ul id="full-report">
+            {% for x in city.full_report %}
+                <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
+            {% endfor %}
+            </ul>
 
-    {% if no_result %}
-        <p id="no-result">{{ no_result }}</p>
-    {% else %}
-        <p id="reporting-area">{{ city.reporting_area }}</p>
-        <ul id="full-report">
-        {% for x in city.full_report %}
-            <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
-        {% endfor %}
+
+            {{ historical_report | json_script:"historical_json" }}
+            <!-- Load D3.js -->
+            <script src="https://d3js.org/d3.v6.min.js"></script>
+
+            <!-- Visualize historical AQI values -->
+            <script>
+                const historical_data = JSON.parse(document.getElementById("historical_json").textContent);
+                (function(data) {
+                    console.log(data);
+                })(historical_data);
+            </script>
+
+        {% endif %}
+    </section>
+
+    <section>
+        <ul id="populated-cities">
+            {% for x in populated_city_reports %}
+                <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a> </li>
+            {% endfor %}
         </ul>
-
-
-        {{ historical_report | json_script:"historical_json" }}
-
-        <!-- Load D3.js -->
-        <script src="https://d3js.org/d3.v6.min.js"></script>
-
-        <script>
-            const historical_data = JSON.parse(document.getElementById("historical_json").textContent);
-            (function(data) {
-                console.log(data);
-            })(historical_data);
-
-
-        </script>
-
-    {% endif %}
-
-</main>
-
-<div>
-    <ul id="populated-cities">
-        {% for x in populated_city_reports %}
-            <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a> </li>
-        {% endfor %}
-    </ul>
-</div>
-
+    </section>
 {% endblock content %}
 

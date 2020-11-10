@@ -158,12 +158,12 @@ ul#populated-cities li a span {
 // Assign correct background color to li elements
 @each $class, $color in $cat-colors {
   ul#populated-cities li.#{$class} {
-    border-color: rgba($color, .9);
+    border-color: rgba($color, 1);
   }
 }
 
 ul#populated-cities li {
-    border-top: 2px solid;
+    border-bottom: 2px solid;
     background: none;
 }
 
@@ -178,7 +178,8 @@ ul#color-key {
     padding: 0;
     position: absolute;
     top: 5.5em;
-    left: -10%;
+    left: -7em;
+    z-index: 2;
 }
 
 ul#color-key li {
@@ -216,15 +217,15 @@ p#reporting-area {
 
 p#no-result {
     text-align: center;
-    font-weight: bold;
-    font-size: 200%;
+    color: #68212e;
+    font-weight: 300;
 }
 
-main {
+section#data {
     max-width: 600px;
     margin: 0 auto;
-    padding: 0 2.5%;
-    min-height: 10em;
+    padding: 0 3em;
+    min-height: 70vh;
 }
 
 footer {

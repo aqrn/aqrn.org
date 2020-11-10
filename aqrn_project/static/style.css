@@ -141,31 +141,31 @@ ul#populated-cities li a span {
 }
 
 ul#populated-cities li.cat1 {
-  border-color: rgba(59, 122, 62, 0.9);
+  border-color: #3b7a3e;
 }
 
 ul#populated-cities li.cat2 {
-  border-color: rgba(170, 150, 72, 0.9);
+  border-color: #aa9648;
 }
 
 ul#populated-cities li.cat3 {
-  border-color: rgba(159, 111, 59, 0.9);
+  border-color: #9f6f3b;
 }
 
 ul#populated-cities li.cat4 {
-  border-color: rgba(155, 63, 63, 0.9);
+  border-color: #9b3f3f;
 }
 
 ul#populated-cities li.cat5 {
-  border-color: rgba(95, 60, 102, 0.9);
+  border-color: #5f3c66;
 }
 
 ul#populated-cities li.cat6 {
-  border-color: rgba(104, 33, 46, 0.9);
+  border-color: #68212e;
 }
 
 ul#populated-cities li {
-  border-top: 2px solid;
+  border-bottom: 2px solid;
   background: none;
 }
 
@@ -179,7 +179,8 @@ ul#color-key {
   padding: 0;
   position: absolute;
   top: 5.5em;
-  left: -10%;
+  left: -7em;
+  z-index: 2;
 }
 
 ul#color-key li {
@@ -216,15 +217,15 @@ p#reporting-area {
 
 p#no-result {
   text-align: center;
-  font-weight: bold;
-  font-size: 200%;
+  color: #68212e;
+  font-weight: 300;
 }
 
-main {
+section#data {
   max-width: 600px;
   margin: 0 auto;
-  padding: 0 2.5%;
-  min-height: 10em;
+  padding: 0 3em;
+  min-height: 70vh;
 }
 
 footer {

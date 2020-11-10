@@ -43,7 +43,7 @@ def home(request, zip_param=None):
         else:
             return render(request, 'index.html', {
                 'form': form,
-                'no_result': "No results found for that zip code!",
+                'no_result': f'No results found for {zip_code}.',
                 'populated_city_reports': get_populated_city_reports(),
                 'color_key': generate_color_key_html()
             })
