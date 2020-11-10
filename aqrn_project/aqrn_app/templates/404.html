@@ -2,18 +2,17 @@
 
 {% block content %}
 
-
-    <h1>404</h1>
+<main>
+    <h1>Page not found.</h1>
     <p>Please enter a valid zip code or click on a city below.</p>
 
-<form action="." method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
-    <p>Enter a 5-digit zip code </p>
-</form>
-
-
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="OK">
+        <p>Enter a 5-digit zip code </p>
+    </form>
+</main>
 
 <div>
     <ul id="populated-cities">

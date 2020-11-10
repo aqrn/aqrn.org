@@ -53,11 +53,18 @@ input[type=submit] {
   border-bottom: 3px solid rgba(255, 255, 255, 0.3);
 }
 
-#site-branding a h1 {
+#site-branding a {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   font-weight: 100;
   margin: 0;
+  font-size: 2.5em;
+  font-weight: 100;
+  transition: opacity 0.2s ease-in-out;
+}
+
+#site-branding a:hover {
+  opacity: 0.8;
 }
 
 #site-branding a, #site-branding a:visited {

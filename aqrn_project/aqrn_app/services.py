@@ -59,7 +59,7 @@ def get_historical_report(zip_code):
         if max_aqi == -1:
             return None
         else:
-            historical_report += [[report_date, max_aqi, r.from_cache]]
+            historical_report += [[report_date, max_aqi]]
 
     historical_report.reverse()
     return historical_report
