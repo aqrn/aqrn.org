@@ -28,17 +28,17 @@ def get_realtime_report(zip_code):
 
     json_object = json.loads(r.text)
 
-    #Dummy Json codes to test parse_realtime_report to ensure that "Unhealthy for Sensitive Groups is changed
+    # Dummy Json codes to test parse_realtime_report to ensure that "Unhealthy for Sensitive Groups is changed
     # to "Mildly Unhealthy"
-    #json_object = json.loads('[{"DateObserved":"2020-11-10 ","HourObserved":8,"LocalTimeZone":"EST", \
-                               # "ReportingArea":"New York City Region","StateCode":"NY","Latitude":40.8419,"Longitude":-73.8359,\
-                               # "ParameterName":"O3","AQI":9,"Category":{"Number":3,"Name":"Unhealthy for Sensitive Groups"}}]')
+    # json_object = json.loads('[{"DateObserved":"2020-11-10 ","HourObserved":8,"LocalTimeZone":"EST", \
+    # "ReportingArea":"New York City Region","StateCode":"NY","Latitude":40.8419,"Longitude":-73.8359,\
+    # "ParameterName":"O3","AQI":9,"Category":{"Number":3,"Name":"Unhealthy for Sensitive Groups"}}]')
 
     return json_object, r.from_cache
 
 
 def get_historical_report(zip_code):
-    historical_report = []
+    historical_report = {}
 
     resp_format = "application/json"
     distance = 25
@@ -65,10 +65,37 @@ def get_historical_report(zip_code):
         if max_aqi == -1:
             return None
         else:
-            historical_report += [[report_date, max_aqi]]
+            historical_report[report_date] = max_aqi
 
-    historical_report.reverse()
-    return historical_report
+    return json.dumps(historical_report)
+
+
+def get_categories():
+    return {
+        "Good": 1,
+        "Moderate": 2,
+        "Unhealthy for Sensitive Groups": 3,
+        "Unhealthy": 4,
+        "Very Unhealthy": 5,
+        "Hazardous": 6,
+        1: "Good",
+        2: "Moderate",
+        3: "Unhealthy for Sensitive Groups",
+        4: "Unhealthy",
+        5: "Very Unhealthy",
+        6: "Hazardous"
+    }
+
+
+def generate_color_key_html():
+    categories = get_categories()
+    key_html = '<ul id="color-key">'
+    for i in range(1, 7):
+        key_html += f'<li class="cat{i}"><span>{i}</span>{categories[i]}</li>'
+
+    key_html += '</ul>'
+    key_html = key_html.replace("Unhealthy for Sensitive Groups", "Mildly Unhealthy")
+    return key_html
 
 
 class City:
@@ -80,29 +107,15 @@ class City:
         self.zip_code = int(zip_code)
 
         if len(self.realtime_json) < 1:
-            return None
-
-        self.reporting_area = self.realtime_json[0]["ReportingArea"]
-        self.parse_realtime_report()
+            return
+        else:
+            self.reporting_area = self.realtime_json[0]["ReportingArea"]
+            self.parse_realtime_report()
 
     def parse_realtime_report(self):
-        cat_lookup = {
-            "Good": 1,
-            "Moderate": 2,
-            "Unhealthy for Sensitive Groups": 3,
-            "Unhealthy": 4,
-            "Very Unhealthy": 5,
-            "Hazardous": 6,
-            1: "Good",
-            2: "Moderate",
-            3: "Unhealthy for Sensitive Groups",
-            4: "Unhealthy",
-            5: "Very Unhealthy",
-            6: "Hazardous"
-        }
+        cat_lookup = get_categories()
 
         for i in range(len(self.realtime_json)):
-
             pollutant = self.realtime_json[i]["ParameterName"]
             pollutant_aqi = self.realtime_json[i]["AQI"]
 
@@ -125,5 +138,3 @@ class City:
             if pollutant_aqi > self.max_aqi:
                 self.max_aqi = pollutant_aqi
                 self.max_cat = cat_num
-
-

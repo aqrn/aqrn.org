@@ -2,16 +2,9 @@
 
 {% block content %}
 
-<div>
-    <ul id="color-key">
-        <li class="cat1"></li>
-        <li class="cat2"></li>
-        <li class="cat3"></li>
-        <li class="cat4"></li>
-        <li class="cat5"></li>
-        <li class="cat6"></li>
-    </ul>
-</div>
+{% autoescape off %}
+    {{ color_key }}
+{% endautoescape %}
 
 <div id="overall-aqi">
 <p>
@@ -41,9 +34,20 @@
         {% endfor %}
         </ul>
 
-        {% for x in historical_report %}
-            <p>{{ x }}</p>
-        {% endfor %}
+
+        {{ historical_report | json_script:"historical_json" }}
+
+        <!-- Load D3.js -->
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+
+        <script>
+            const historical_data = JSON.parse(document.getElementById("historical_json").textContent);
+            (function(data) {
+                console.log(data);
+            })(historical_data);
+
+
+        </script>
 
     {% endif %}
 

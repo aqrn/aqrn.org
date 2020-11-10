@@ -2,7 +2,7 @@ from typing import List
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .services import City, get_populated_city_reports, get_historical_report
+from .services import City, get_populated_city_reports, get_historical_report, generate_color_key_html
 from .forms import ZipCodeForm
 from django.http import Http404
 from django.shortcuts import redirect
@@ -37,13 +37,15 @@ def home(request, zip_param=None):
                 'city': city,
                 'body_classes': body_classes,
                 'populated_city_reports': get_populated_city_reports(city),
-                'historical_report': get_historical_report(city.zip_code)
+                'historical_report': get_historical_report(city.zip_code),
+                'color_key': generate_color_key_html()
             })
         else:
             return render(request, 'index.html', {
                 'form': form,
                 'no_result': "No results found for that zip code!",
-                'populated_city_reports': get_populated_city_reports()
+                'populated_city_reports': get_populated_city_reports(),
+                'color_key': generate_color_key_html()
             })
 
     else:
@@ -51,7 +53,8 @@ def home(request, zip_param=None):
 
     return render(request, 'index.html', {
         'form': form,
-        'populated_city_reports': get_populated_city_reports()
+        'populated_city_reports': get_populated_city_reports(),
+        'color_key': generate_color_key_html()
     })
 
 
