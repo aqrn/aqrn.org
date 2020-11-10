@@ -37,7 +37,7 @@ def home(request, zip_param=None):
                 'city': city,
                 'body_classes': body_classes,
                 'populated_city_reports': get_populated_city_reports(city),
-                'historical_report': get_historical_report(city.zip_code),
+                'historical_report': get_historical_report(city),
                 'color_key': generate_color_key_html()
             })
         else:

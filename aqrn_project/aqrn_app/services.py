@@ -9,15 +9,17 @@ requests_cache.install_cache(cache_name="air_now_cache", expire_after=3600)
 
 def get_populated_city_reports(main_city=None):
     zip_codes = [10001, 90001, 60007, 77001, 19019, 85001, 91945, 78006, 75001, 94088, 78701]
+    populated_cities = [City(zip_code) for zip_code in zip_codes]
+    main_city_zip = -1
     if main_city is not None:
-        return [City(zip_code) for zip_code in zip_codes if (zip_code != main_city.zip_code)]
-    else:
-        return [City(zip_code) for zip_code in zip_codes]
+        main_city_zip = main_city.zip_code
+
+    return [x for x in populated_cities if x.zip_code != main_city_zip and x.max_aqi != -1]
 
 
 def get_realtime_report(zip_code):
     resp_format = "application/json"
-    distance = 25
+    distance = 100
 
     url = "http://www.airnowapi.org/aq/observation/zipCode/current?"
     query_vars = f"format={resp_format}&zipCode={zip_code}" \
@@ -37,11 +39,12 @@ def get_realtime_report(zip_code):
     return json_object, r.from_cache
 
 
-def get_historical_report(zip_code):
-    historical_report = {}
+def get_historical_report(city):
+    zip_code = city.zip_code
+    historical_report = []
 
     resp_format = "application/json"
-    distance = 25
+    distance = 100
     url = "https://www.airnowapi.org/aq/observation/zipCode/historical/?"
 
     # Get reports from recent days
@@ -65,9 +68,17 @@ def get_historical_report(zip_code):
         if max_aqi == -1:
             return None
         else:
-            historical_report[report_date] = max_aqi
+            historical_report.append({"date": report_date, "aqi": max_aqi})
 
-    return json.dumps(historical_report)
+    # Add realtime AQI to the list
+    historical_report.append({"date": datetime.today().strftime("%Y-%m-%d"),
+                              "aqi": city.max_aqi})
+
+    # Turn list into a JSON string
+    json_string = json.dumps(historical_report)
+
+    # Return a JSON object
+    return json.loads(json_string)
 
 
 def get_categories():
