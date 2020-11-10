@@ -1,4 +1,24 @@
 /* SASS Variables */
+
+ul#color-key {
+    list-style: none;
+    padding: 0;
+}
+
+ul#color-key li {
+  list-style: none;
+  text-decoration: none;
+  width: 5%;
+  padding: 1em;
+  box-sizing: border-box;
+  display: block;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0.95;
+  text-align: left;
+}
+
+
+
 body {
   margin: 0;
   padding: 0;
