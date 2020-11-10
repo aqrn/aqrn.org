@@ -42,6 +42,7 @@ def home(request, zip_param=None):
         else:
             return render(request, 'index.html', {
                 'form': form,
+                'no_result': "No results found for that zip code!",
                 'populated_city_reports': get_populated_city_reports()
             })
 
