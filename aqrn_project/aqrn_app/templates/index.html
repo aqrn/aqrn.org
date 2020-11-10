@@ -31,9 +31,7 @@
 
 <main>
 
-    {% if no_result %}
-        <p id="no-result">{{ no_result }}</p>
-    {% else %}
+    {% if city.reporting_area %}
         <p id="reporting-area">{{ city.reporting_area }}</p>
         <ul id="full-report">
         {% for x in city.full_report %}
