@@ -11,7 +11,7 @@
         datesArray.push(data[i].date)
         aqiArray.push(data[i].aqi)
     }
-    console.log(data);
+    // console.log(data);
 
     const margin = {top: 30, right: 20, bottom: 30, left: 30},
         height = 300 - margin.top - margin.bottom,
@@ -33,7 +33,7 @@
 
     let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%m/%d")).ticks(6);
 
-    let svg = d3.select("#historical").append("svg")
+    let svg = d3.select("#historical .chart").append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
         .classed("svg-content", true)
@@ -69,13 +69,13 @@
         .attr("fill", "none")
         .attr("stroke", "rgba(255,255,255,.4)");
 
-    let path_length = path.node().getTotalLength();
-
-    path.attr("stroke-dasharray", `${path_length} ${path_length}`)
-        .attr("stroke-dashoffset", path_length)
-        .transition()
-            .duration(2000)
-            .ease(d3.easeCubicOut)
-            .attr("stroke-dashoffset", 0);
+    // let path_length = path.node().getTotalLength();
+    //
+    // path.attr("stroke-dasharray", `${path_length} ${path_length}`)
+    //     .attr("stroke-dashoffset", path_length)
+    //     .transition()
+    //         .duration(2000)
+    //         .ease(d3.easeCubicOut)
+    //         .attr("stroke-dashoffset", 0);
 
 })();
