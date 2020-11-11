@@ -80,13 +80,19 @@
                }
             });
 
-           // Block non-numeric characters
-           form_input.addEventListener("keypress", function(event) {
+            // Handle key presses
+            form_input.addEventListener("keypress", function(event) {
+               // Block non-numeric characters
                if (!regex.test(event.key)) {
                    event.preventDefault();
                    return false;
                }
-           });
+               // Clear input if number is pressed when input is full
+               else if (this.value.length == 5) {
+                   this.value = "";
+               }
+
+            });
         })();
     </script>
 
