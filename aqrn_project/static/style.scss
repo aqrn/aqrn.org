@@ -48,27 +48,31 @@ input#id_zip_code {
 
 }
 
-input#id_zip_code::placeholder {
-    color: #ccc;
-}
-
-input#id_zip_code:focus {
-    background: rgba(200,200,200,.15);
-    outline: none;
-}
-
-input[type="submit"] {
-    display: none;
-}
-
-.forecast input#id_zip_code:focus {
-    background: rgba(150,150,150,.1)
-}
-
 .forecast input#id_zip_code {
     color: #fff;
     border: none;
     border-bottom: 3px solid rgba(255, 255, 255, .3);
+}
+
+input#id_zip_code::placeholder {
+    color: rgba(0,0,0,.3);
+}
+
+.forecast input#id_zip_code::placeholder {
+    color: rgba(255,255,255,.5);
+}
+
+input#id_zip_code:focus {
+    background: rgba(0,0,0,.01);
+    outline: none;
+}
+
+.forecast input#id_zip_code:focus {
+    background: rgba(255,255,255,.02)
+}
+
+input[type="submit"] {
+    display: none;
 }
 
 #site-branding a {
