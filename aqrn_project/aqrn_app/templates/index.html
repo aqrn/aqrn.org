@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <section id="main-city-data">
+
+    <div id="main-city-data">
         {% autoescape off %}
             {{ color_key }}
         {% endautoescape %}
@@ -48,19 +49,19 @@
 
 
         {% endif %}
-    </section>
+    </div>
 
-    <section>
+    <div>
         <ul id="populated-cities">
             {% for x in populated_city_reports %}
                 <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a> </li>
             {% endfor %}
         </ul>
-    </section>
+    </div>
 {% endblock content %}
 
-{% block footer %}
 
+{% block footer %}
     <!-- Make color key clickable -->
     <script>
         (function() {
@@ -80,11 +81,9 @@
         })();
     </script>
 
+    <!-- Add historical chart if data is available -->
     {% if historical_report != None %}
         <script src="https://d3js.org/d3.v6.min.js"></script>
         <script src="{% static 'js/historical.js' %}"></script>
     {% endif %}
-
-
-
 {% endblock footer %}
