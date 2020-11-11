@@ -26,6 +26,10 @@ body.forecast {
 	color: #fff;
 }
 
+strong {
+    font-weight: 300;
+}
+
 footer, ul#populated-cities li a, #site-branding {
     padding-left: 2.5%;
     padding-right: 2.5%;
@@ -125,10 +129,11 @@ ul#populated-cities li a {
     transition: opacity .2s ease-in-out;
     opacity: .95;
     text-align: center;
+    font-weight: 100;
 }
 
 ul#populated-cities li a span {
-    font-weight: 600;
+    font-weight: 300;
 }
 
 // Assign correct background color to li elements
@@ -156,11 +161,11 @@ ul#color-key {
     top: 5.5em;
     left: -7em;
     z-index: 2;
-    transition: all .3s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 
 ul#color-key:hover {
-    opacity: .9;
+    opacity: .85;
     cursor: pointer;
 }
 
@@ -233,6 +238,18 @@ footer a, footer a:visited {
 
 footer a:hover {
     text-decoration: none;
+}
+
+div#historical {
+    position: relative;
+}
+
+div#historical p {
+    font-style: italic;
+    text-align: left;
+    font-weight: 100;
+    opacity: .7;
+    font-size: 80%;
 }
 
 .chart {

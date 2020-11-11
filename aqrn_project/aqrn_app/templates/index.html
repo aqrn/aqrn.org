@@ -35,12 +35,16 @@
             {% endfor %}
             </ul>
 
+            <div id="historical">
             {% if historical_report != None %}
+                <div class="chart">
                 <!-- Historical data visualization -->
                 {{ historical_report | json_script:"historical_json" }}
-                <div id="historical" class="chart"></div>
+                </div>
+            {% else %}
+                <p>Historical data not available for <strong>{{ city.zip_code }}</strong>.</p>
             {% endif %}
-
+            </div>
 
 
         {% endif %}

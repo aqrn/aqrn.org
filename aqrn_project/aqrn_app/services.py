@@ -8,7 +8,7 @@ requests_cache.install_cache(cache_name="air_now_cache", expire_after=3600)
 
 
 def get_populated_city_reports(main_city=None):
-    zip_codes = [10001, 90001, 60007, 77001, 19019, 85001, 91945, 78006, 75001, 94088, 78701]
+    zip_codes = [10001, 90001, 60007, 77001, 19019, 85006, 91945, 78006, 75001, 94088, 78701]
     populated_cities = [City(zip_code) for zip_code in zip_codes]
     main_city_zip = -1
     if main_city is not None:
@@ -68,7 +68,7 @@ def get_historical_report(city):
         if max_aqi == -1:
             return None
         else:
-            historical_report.append({"date": report_date, "aqi": max_aqi})
+            historical_report.insert(0, {"date": report_date, "aqi": max_aqi})
 
     # Add realtime AQI to the list
     historical_report.append({"date": datetime.today().strftime("%Y-%m-%d"),

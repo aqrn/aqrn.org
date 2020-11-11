@@ -11,11 +11,11 @@
         datesArray.push(data[i].date)
         aqiArray.push(data[i].aqi)
     }
+    console.log(data);
 
-    const margin = {top: 30, right: 20, bottom: 30, left: 20},
+    const margin = {top: 30, right: 20, bottom: 30, left: 30},
         height = 300 - margin.top - margin.bottom,
         width = 400 - margin.left - margin.right;
-
 
     // Create scales
     let y = d3.scaleLinear()
@@ -38,6 +38,7 @@
         .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
         .classed("svg-content", true)
         ;
+
     let circles = svg.append("g").attr("class", "nodes")
         .attr("width", width)
         .attr("height", height)
@@ -48,7 +49,7 @@
             .attr("cx", (d,i) => x(d.date))
             .attr("cy", (d,i) => height - y(d.aqi))
             .attr("r", "3")
-            .attr("fill", "#fff");
+            .attr("fill", "#efefef");
 
 
     svg.append("g").attr("class", "axis y")
@@ -57,4 +58,24 @@
     svg.append("g").attr("class", "axis x")
         .attr("transform", `translate(${margin.left}, ${height + margin.top})`)
         .call(xAxis);
+
+    let line = d3.line()
+        .x(d => x(d.date))
+        .y(d => yAxisScale(d.aqi));
+
+    let path = svg.append("g").attr("class", "chart-line")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`)
+        .append("path").attr("d", line(data))
+        .attr("fill", "none")
+        .attr("stroke", "rgba(255,255,255,.4)");
+
+    let path_length = path.node().getTotalLength();
+
+    path.attr("stroke-dasharray", `${path_length} ${path_length}`)
+        .attr("stroke-dashoffset", path_length)
+        .transition()
+            .duration(2000)
+            .ease(d3.easeCubicOut)
+            .attr("stroke-dashoffset", 0);
+
 })();
