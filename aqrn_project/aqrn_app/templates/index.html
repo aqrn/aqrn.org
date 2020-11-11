@@ -62,10 +62,31 @@
 
 
 {% block footer %}
+    <!-- Monitor zip code input -->
     <script>
         (function() {
-           const form_input = document.getElementById("id_zip_code");
-           form_input.focus();
+            const form_input = document.getElementById("id_zip_code");
+            const form = document.getElementsByTagName("form")[0];
+
+            form_input.focus();
+
+            let regex = new RegExp("^[0-9]+$");
+
+            // Submit form if input changes
+            // and there are 5 numbers
+            form_input.addEventListener("input", function(event) {
+               if (this.value.length == 5 && regex.test(this.value)) {
+                   form.submit()
+               }
+            });
+
+           // Block non-numeric characters
+           form_input.addEventListener("keypress", function(event) {
+               if (!regex.test(event.key)) {
+                   event.preventDefault();
+                   return false;
+               }
+           });
         })();
     </script>
 
