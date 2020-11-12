@@ -29,9 +29,10 @@ input#id_zip_code {
   border-bottom: 3px solid rgba(0, 0, 0, 0.3);
   font-size: 3em;
   text-align: center;
-  font-family: "Roboto Thin", sans-serif;
+  font-family: "Roboto", sans-serif;
   padding: 0.25em 0;
   max-width: 5em;
+  font-weight: 100;
 }
 
 .forecast input#id_zip_code {
@@ -59,6 +60,16 @@ input#id_zip_code:focus {
 
 input[type=submit] {
   display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 #site-branding a {
