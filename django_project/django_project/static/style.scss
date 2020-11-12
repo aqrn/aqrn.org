@@ -1,0 +1,292 @@
+/* SASS Variables */
+
+$bg-color: #e5e5e5;
+
+$cat1: #3b7a3e;
+$cat2: #aa9648;
+$cat3: #9f6f3b;
+$cat4: #9b3f3f;
+$cat5: #5f3c66;
+$cat6: #68212e;
+
+$cat-colors: ("cat1": $cat1, "cat2": $cat2, "cat3": $cat3,
+        "cat4": $cat4, "cat5": $cat5, "cat6": $cat6);
+
+body {
+	margin: 0;
+	padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+	line-height: 1.5;
+    font-size: 18px;
+	background: $bg-color;
+}
+
+body.forecast {
+	color: #fff;
+}
+
+strong {
+    font-weight: 300;
+}
+
+footer, ul#populated-cities li a, #site-branding {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+input#id_zip_code {
+    color: #111;
+    background: none;
+    border: none;
+    border-bottom: 3px solid rgba(0, 0 ,0, .3);
+    font-size: 3em;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    padding: .25em 0;
+    max-width: 5em;
+    font-weight: 100;
+}
+
+.forecast input#id_zip_code {
+    color: #fff;
+    border: none;
+    border-bottom: 3px solid rgba(255, 255, 255, .3);
+}
+
+input#id_zip_code::placeholder {
+    color: rgba(0,0,0,.3);
+}
+
+.forecast input#id_zip_code::placeholder {
+    color: rgba(255,255,255,.5);
+}
+
+input#id_zip_code:focus {
+    background: rgba(0,0,0,.01);
+    outline: none;
+}
+
+.forecast input#id_zip_code:focus {
+    background: rgba(255,255,255,.02)
+}
+
+input[type="submit"] {
+    display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#site-branding a {
+    padding-top: .25em;
+    padding-bottom: .25em;
+    font-weight: 100;
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: 100;
+    transition: opacity .2s ease-in-out;
+}
+
+#site-branding a:hover {
+    opacity: .8;
+}
+
+#site-branding a, #site-branding a:visited {
+    color: #111;
+    text-decoration: none;
+}
+
+.forecast #site-branding a, .forecast #site-branding a:visited {
+    color: #fff;
+}
+
+
+// Assign background color to each cat class (.cat1 thru .cat6)
+@each $class, $color in $cat-colors {
+    .#{$class} {
+        background: $color;
+    }
+}
+
+ul#full-report {
+    list-style: none;
+    padding: 0;
+}
+
+ul#full-report span {
+    font-weight: 300;
+}
+
+ul#populated-cities {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    background: $bg-color;
+    margin: 5em 0 0 0;
+}
+
+ul#populated-cities li a {
+    color: #fff;
+    text-decoration: none;
+    width: 100%;
+    padding: 1em;
+    box-sizing: border-box;
+    display: block;
+    transition: opacity .2s ease-in-out;
+    opacity: .95;
+    text-align: center;
+    font-weight: 100;
+}
+
+ul#populated-cities li a span {
+    font-weight: 300;
+}
+
+// Assign correct background color to li elements
+@each $class, $color in $cat-colors {
+  ul#populated-cities li.#{$class} {
+    border-color: rgba($color, 1);
+  }
+}
+
+ul#populated-cities li {
+    border-bottom: 1px solid;
+    background: none;
+}
+
+ul#populated-cities li a:hover {
+    opacity: .9;
+}
+
+// Color key list
+ul#color-key {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 5.5em;
+    left: -7em;
+    z-index: 2;
+    transition: all .2s ease-in-out;
+    color: #fff;
+}
+
+ul#color-key:hover {
+    opacity: .85;
+    cursor: pointer;
+}
+
+ul#color-key li {
+    list-style: none;
+    text-decoration: none;
+    width: 10em;
+    padding: .5em;
+    box-sizing: border-box;
+    display: block;
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0.9;
+    text-align: left;
+    font-size: 80%;
+    font-weight: 300;
+}
+
+ul#color-key li span {
+    display: block;
+    font-size: 2em;
+    font-weight: 100;
+}
+
+form {
+    text-align: center;
+}
+
+form label {
+    display: none;
+}
+
+div#main-city-data {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 3em;
+    min-height: 70vh;
+}
+
+div#main-city-data p {
+    text-align: center;
+    font-weight: 300;
+}
+
+p#no-result {
+    color: $cat6;
+}
+
+div#overall-aqi p {
+    font-size: 800%;
+    text-align: center;
+    line-height: 1em;
+    margin: 0 0 .25em 0;
+    font-weight: 100;
+}
+
+footer {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    background-color: $bg-color;
+}
+
+footer p {
+    font-size: 75%;
+    color: #111;
+}
+
+footer a, footer a:visited {
+    color: #2f5bac;
+}
+
+footer a:hover {
+    text-decoration: none;
+}
+
+div#historical {
+    position: relative;
+}
+
+div#historical p {
+    font-style: italic;
+    text-align: left;
+    font-weight: 100;
+    opacity: .7;
+    font-size: 80%;
+}
+
+.chart {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%;
+    vertical-align: top;
+    overflow: hidden;
+    margin: 1em 0;
+}
+
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tick line {
+    display: none;
+}
+
+.axis.y path, .axis.x path {
+    display: none;
+}

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>aqrn</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" media="all">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;1,100;1,300&display=swap" rel="stylesheet">
+    </head>
+    <body class="{{ body_classes }}">
+
+        <div id="site-branding">
+            <a href="/">aqrn</a>
+        </div>
+
+        <main>
+            {% block content %}
+            {% endblock content %}
+        </main>
+
+        <footer>
+            <p>All data provided by the <a href="https://docs.airnowapi.org/" name="U.S. EPA">United States EPA</a></p>
+            {% block footer %}
+            {% endblock footer %}
+        </footer>
+
+{#        <script src="{% static 'main.js' %}"></script>#}
+    </body>
+</html>
+
