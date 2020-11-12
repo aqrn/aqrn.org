@@ -11,4 +11,7 @@ class ZipCodeForm(forms.Form):
                                widget=forms.TextInput(
                                    attrs={'pattern': '[0-9]{5}',
                                           'placeholder': '55555',
-                                          'title': 'Enter a 5-digit numerical zip code'}))
+                                          'title': 'Enter a 5-digit numerical zip code',
+                                          'type': 'tel'
+                                          }))
+
