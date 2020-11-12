@@ -2,112 +2,135 @@
 {% load static %}
 {% block content %}
 
-    <div id="main-city-data">
-        {% autoescape off %}
-            {{ color_key }}
-        {% endautoescape %}
+<div id="main-city-data">
+    {% autoescape off %}
+    {{ color_key }}
+    {% endautoescape %}
 
-        <div id="overall-aqi">
-            <p>
-                {% if city.max_aqi %}
-                    {{ city.max_aqi}}
-                {% else %}
-                    {# Add non-breaking space to maintain vertical space?  #}
-                     &nbsp;
-                {% endif %}
-            </p>
-        </div>
+    <div id="overall-aqi">
+        <p>
+            {% if city.max_aqi %}
+                {{ city.max_aqi }}
+            {% else %}
+                {# Add non-breaking space to maintain vertical space?  #}
+                &nbsp;
+            {% endif %}
+        </p>
+    </div>
 
-        <form action="." method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="OK">
-        </form>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="OK">
+    </form>
 
-        {% if no_result %}
-            <p id="no-result">{{ no_result }}</p>
-        {% elif not city %}
-            <p>Enter a zip code.</p>
-        {% else %}
-            <p id="reporting-area">{{ city.reporting_area }}</p>
-            <ul id="full-report">
+    {% if no_result %}
+        <p id="no-result">{{ no_result }}</p>
+    {% elif not city %}
+        <p>Enter a zip code.</p>
+    {% else %}
+        <p id="reporting-area">{{ city.reporting_area }}</p>
+        <ul id="full-report">
             {% for x in city.full_report %}
                 <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
             {% endfor %}
-            </ul>
+        </ul>
 
-            <div id="historical">
+        <div id="historical">
             {% if historical_report != None %}
                 <div class="chart">
-                <!-- Historical data visualization -->
-                {{ historical_report | json_script:"historical_json" }}
+                    <!-- Historical data visualization -->
+                    {{ historical_report | json_script:"historical_json" }}
                 </div>
             {% else %}
                 <p>Historical data not available for <strong>{{ city.zip_code }}</strong>.</p>
             {% endif %}
-            </div>
+        </div>
 
 
-        {% endif %}
-    </div>
+    {% endif %}
+</div>
 
-    <div>
-        <ul id="populated-cities">
-            {% for x in populated_city_reports %}
-                <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }} <span>{{ x.max_aqi }}</span></a> </li>
-            {% endfor %}
-        </ul>
-    </div>
+<div>
+    <ul id="populated-cities">
+        {% for x in populated_city_reports %}
+            <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }}
+                <span>{{ x.max_aqi }}</span></a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div id="loader-wrap">
+    <div class="loader"></div>
+</div>
+
 {% endblock content %}
 
 
 {% block footer %}
-    <!-- Monitor zip code input -->
+    <!-- Monitor zip code input events -->
     <script>
-        (function() {
+        (function () {
             const form_input = document.getElementById("id_zip_code");
             const form = document.getElementsByTagName("form")[0];
 
+            // Hide loader animation on page load
+            let loader = document.getElementById("loader-wrap");
+            loader.style.display = "none";
+
+            // Auto-focus on the zip code input
             form_input.focus();
 
-            let regex = new RegExp("^[0-9]+$");
+            // Regular expression for validating input
+            // (numbers 0-9 only)
+            const regex = new RegExp("^[0-9]+$");
 
-            // Submit form if input changes
-            // and there are 5 numbers
-            form_input.addEventListener("input", function(event) {
-               if (this.value.length == 5 && regex.test(this.value)) {
-                   form.submit()
-               }
+            // Handle input changes
+            form_input.addEventListener("input", function (event) {
+                if (this.value.length === 5 && regex.test(this.value)) {
+                    // Display loader animation
+                    // while input is validating
+                    loader.style.display = "block";
+
+                    // Submit form if input valid
+                    // (5 numeric digits)
+                    form.submit()
+                }
             });
 
             // Handle key presses
-            form_input.addEventListener("keypress", function(event) {
-               // Block non-numeric characters
-               if (!regex.test(event.key)) {
-                   event.preventDefault();
-                   return false;
-               }
-               // Clear input if number is pressed when input is full
-               else if (this.value.length == 5) {
-                   this.value = "";
-               }
+            form_input.addEventListener("keypress", function (event) {
+                // Block non-numeric characters
+                // if regex test fails
+                if (!regex.test(event.key)) {
+                    event.preventDefault();
+                    return false;
+                }
+                else {
+                    // Determine if user has selected any text
+                    let selection = form_input.value.substring(form_input.selectionStart, form_input.selectionEnd);
 
+                    // Clear input if no text is selected
+                    // and user starts typing with full input
+                    if (this.value.length === 5 && selection.length === 0) {
+                        this.value = "";
+                    }
+                }
             });
         })();
     </script>
 
-
     <!-- Make color key clickable -->
     <script>
-        (function() {
+        (function () {
             const color_key = document.getElementById("color-key");
             let initial_pos = "-7em";
             color_key.style.left = initial_pos;
 
-            color_key.addEventListener("click", function() {
+            color_key.addEventListener("click", function () {
                 let current_pos = color_key.style.left;
 
-                if (current_pos == "0px") {
+                if (current_pos === "0px") {
                     color_key.style.left = initial_pos;
                 } else {
                     color_key.style.left = "0px";
@@ -122,4 +145,3 @@
         <script src="{% static 'js/historical.js' %}"></script>
     {% endif %}
 {% endblock footer %}
-

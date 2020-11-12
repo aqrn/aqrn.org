@@ -42,10 +42,10 @@ input#id_zip_code {
     border-bottom: 3px solid rgba(0, 0 ,0, .3);
     font-size: 3em;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Thin', sans-serif;
     padding: .25em 0;
     max-width: 5em;
-    font-weight: 100;
+
 }
 
 .forecast input#id_zip_code {
@@ -73,15 +73,6 @@ input#id_zip_code:focus {
 
 input[type="submit"] {
     display: none;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  -moz-appearance: textfield;
 }
 
 #site-branding a {
@@ -214,7 +205,7 @@ form label {
 div#main-city-data {
     max-width: 600px;
     margin: 0 auto;
-    padding: 0 3em;
+    padding: 0 2.5em;
     min-height: 70vh;
 }
 
@@ -289,4 +280,33 @@ div#historical p {
 
 .axis.y path, .axis.x path {
     display: none;
+}
+
+// Loader animation
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+div#loader-wrap {
+    position: absolute;
+    top: 11em;
+    left: 50vw;
+    transform: translateX(-50%);
+    z-index: 99999;
+}
+
+.loader {
+  border: .5em solid rgba(255,255,255,.4);
+  border-radius: 50%;
+  border-top: .5em solid rgba(0,0,0,.3);
+  width: 3em;
+  height: 3em;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
