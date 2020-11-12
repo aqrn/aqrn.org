@@ -6,7 +6,7 @@ body {
   font-weight: 100;
   line-height: 1.5;
   font-size: 18px;
-  background: #e5e5e5;
+  background: #efefef;
 }
 
 body.forecast {
@@ -132,7 +132,7 @@ ul#populated-cities {
   list-style: none;
   text-align: center;
   padding: 0;
-  background: #e5e5e5;
+  background: #efefef;
   margin: 5em 0 0 0;
 }
 
@@ -258,7 +258,7 @@ div#overall-aqi p {
 footer {
   padding-top: 1.5em;
   padding-bottom: 1.5em;
-  background-color: #e5e5e5;
+  background-color: #efefef;
 }
 
 footer p {
@@ -268,6 +268,7 @@ footer p {
 
 footer a, footer a:visited {
   color: #2f5bac;
+  font-weight: 300;
 }
 
 footer a:hover {
