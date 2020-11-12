@@ -13,7 +13,7 @@ def get_populated_city_reports(main_city=None):
     zip_codes = [10001, 90001, 60007, 77001, 19019, 85006, 91945, 78006, 75001, 94088, 78701]
 
     # most polluted cities
-    zip_codes += [99703, 15106, 84044, 440101, 93256]
+    zip_codes += [99703, 15106, 84044, 440101, 93256, 97301]
 
     random.shuffle(zip_codes)
 
