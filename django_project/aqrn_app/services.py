@@ -3,12 +3,20 @@ from datetime import datetime, timedelta
 import requests
 import requests_cache
 from django.conf import settings
+import random
 
 requests_cache.install_cache(cache_name="air_now_cache", expire_after=3600)
 
 
 def get_populated_city_reports(main_city=None):
+    # most populated cities
     zip_codes = [10001, 90001, 60007, 77001, 19019, 85006, 91945, 78006, 75001, 94088, 78701]
+
+    # most polluted cities
+    zip_codes += [99703, 15106, 84044, 440101, 93256]
+
+    random.shuffle(zip_codes)
+
     populated_cities = [City(zip_code) for zip_code in zip_codes]
     main_city_zip = -1
     if main_city is not None:
