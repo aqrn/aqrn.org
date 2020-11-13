@@ -202,7 +202,6 @@ ul#color-key {
   padding: 0;
   position: absolute;
   top: 5.5em;
-  left: 0;
   z-index: 2;
   transition: all 0.2s ease-in-out;
   color: #fff;
