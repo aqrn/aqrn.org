@@ -27,15 +27,15 @@
     {% if no_result %}
         <p id="no-result">{{ no_result }}</p>
     {% elif not city %}
-        <p>Enter a zip code.</p>
+        <p>Enter a zip code for the <strong>air quality right now.</strong></p>
     {% else %}
-        <p id="reporting-area">{{ city.reporting_area }}</p>
+        <p id="reporting-area">{{ city.reporting_area }}, {{ city.state_code }}</p>
         <ul id="full-report">
             {% for x in city.full_report %}
                 <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
             {% endfor %}
         </ul>
-
+        <p id="updated">Last updated: <strong>{{ city.report_time }}</strong></p>
         <div id="historical">
             {% if historical_report != None %}
                 <div class="chart">
@@ -51,11 +51,13 @@
     {% endif %}
 </div>
 
-<div>
+<div id="cities">
     <ul id="populated-cities">
         {% for x in populated_city_reports %}
-            <li class="cat{{ x.max_cat }}"><a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }}
-                <span>{{ x.max_aqi }}</span></a></li>
+            <li class="cat{{ x.max_cat }}">
+                <a class="cat{{ x.max_cat }}" href="/{{ x.zip_code }}">{{ x.reporting_area }}, {{ x.state_code }}
+                <span>{{ x.max_aqi }}</span></a>
+            </li>
         {% endfor %}
     </ul>
 </div>
@@ -125,7 +127,10 @@
         (function () {
             const color_key = document.getElementById("color-key");
             let initial_pos = "-7em";
-            color_key.style.left = initial_pos;
+            setTimeout(function() {
+                color_key.style.left = initial_pos;
+            }, 1500);
+
 
             color_key.addEventListener("click", function () {
                 let current_pos = color_key.style.left;

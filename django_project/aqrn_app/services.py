@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 import requests
 import requests_cache
 from django.conf import settings
@@ -129,15 +129,21 @@ class City:
             return
         else:
             self.reporting_area = self.realtime_json[0]["ReportingArea"]
-            self.parse_realtime_report()
+            self.state_code = self.realtime_json[0]["StateCode"]
+            report_hour = str(self.realtime_json[0]["HourObserved"])
+            report_time_zone = self.realtime_json[0]["LocalTimeZone"]
+            self.report_time = report_hour + " " + report_time_zone
+            self.parse_pollutants()
 
-    def parse_realtime_report(self):
+    def parse_pollutants(self):
         cat_lookup = get_categories()
 
+        # Cycle through pollutants in realtime report
         for i in range(len(self.realtime_json)):
             pollutant = self.realtime_json[i]["ParameterName"]
             pollutant_aqi = self.realtime_json[i]["AQI"]
 
+            # Ensure instance contains both category name and number
             cat_name = self.realtime_json[i]["Category"].get("Name")
             cat_num = self.realtime_json[i]["Category"].get("Number")
             if cat_name is None:
@@ -145,15 +151,17 @@ class City:
             if cat_num is None:
                 cat_num = cat_lookup[str(cat_name)]
 
-            # Modify category name
+            # Modify category name if needed
             if cat_name == "Unhealthy for Sensitive Groups":
                 cat_name = "Mildly Unhealthy"
 
+            # Add pollutant info to full report
             self.full_report.append({"pollutant": pollutant,
                                      "pollutant_aqi": pollutant_aqi,
                                      "cat_num": cat_num,
                                      "cat_name": cat_name})
 
+            # Find max pollutant AQI to use as overall AQI
             if pollutant_aqi > self.max_aqi:
                 self.max_aqi = pollutant_aqi
                 self.max_cat = cat_num
