@@ -12,6 +12,6 @@ class ZipCodeForm(forms.Form):
                                    attrs={'pattern': '[0-9]{5}',
                                           'placeholder': '55555',
                                           'title': 'Enter a 5-digit numerical zip code',
-                                          'type': 'number'
+                                          'type': 'tel'
                                           }))
 
