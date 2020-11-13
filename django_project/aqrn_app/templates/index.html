@@ -127,10 +127,16 @@
         (function () {
             const color_key = document.getElementById("color-key");
             let initial_pos = "-7em";
-            setTimeout(function() {
-                color_key.style.left = initial_pos;
-            }, 1500);
 
+            if (document.body.classList.contains("forecast")) {
+                color_key.style.left = "0px";
+                setTimeout(function() {
+                    color_key.style.left = initial_pos;
+                }, 1500);
+            }
+            else {
+               color_key.style.left = initial_pos;
+            }
 
             color_key.addEventListener("click", function () {
                 let current_pos = color_key.style.left;
