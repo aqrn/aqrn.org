@@ -116,6 +116,20 @@ def generate_color_key_html():
     key_html = key_html.replace("Unhealthy for Sensitive Groups", "Mildly Unhealthy")
     return key_html
 
+def get_advisory(cat_num):
+    advisory = {
+        1: "",
+        2: "Unusually sensitive individuals should consider limiting prolonged outdoor exertion",
+        3: "Children, active adults, and people with respiratory disease, such as asthma, "
+           "should limit prolonged outdoor exertion.",
+        4: "Children, active adults, and people with respiratory disease, such as asthma,"
+           "should avoid prolonged outdoor exertion; everyone else should limit prolonged "
+           "outdoor exertion.",
+        5: "Children, active adults, and people with respiratory disease, such as asthma, "
+           "should avoid outdoor exertion; everyone else should limit outdoor exertion.",
+        6: "Everyone should avoid all physical activity outdoors."
+    }
+    return advisory.get(cat_num, "")
 
 class City:
     def __init__(self, zip_code):
@@ -124,6 +138,7 @@ class City:
         self.max_cat = -1
         self.full_report = []
         self.zip_code = int(zip_code)
+        self.advisory = ""
 
         if len(self.realtime_json) < 1:
             return
@@ -134,6 +149,7 @@ class City:
             report_time_zone = self.realtime_json[0]["LocalTimeZone"]
             self.report_time = report_hour + " " + report_time_zone
             self.parse_pollutants()
+            self.advisory = get_advisory(self.max_cat)
 
     def parse_pollutants(self):
         cat_lookup = get_categories()

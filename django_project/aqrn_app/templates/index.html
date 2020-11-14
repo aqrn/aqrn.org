@@ -39,6 +39,11 @@
                 <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
             {% endfor %}
         </ul>
+        <p id="advisory">
+            {% if city.advisory %}
+                {{city.advisory}}
+            {% endif %}
+        </p>
         <p id="updated">Last updated: <strong>{{ city.report_time }}</strong></p>
         <div id="historical">
             {% if historical_report != None %}

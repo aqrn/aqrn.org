@@ -255,6 +255,11 @@ p#reporting-area {
   font-weight: 300;
 }
 
+div#main-city-data p#advisory {
+  font-weight: 300;
+  text-align: left;
+}
+
 div#main-city-data p#updated {
   font-size: 80%;
   opacity: 0.8;
