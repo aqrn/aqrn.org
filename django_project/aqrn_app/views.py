@@ -44,7 +44,7 @@ def home(request, zip_param=None):
             else:
                 return render(request, 'index.html', {
                     'form': form,
-                    'no_result': f'No results found for {zip_code}.',
+                    'no_result': f'No results found for <strong>{zip_code}</strong>.',
                     'populated_city_reports': get_populated_city_reports(),
                     'color_key': generate_color_key_html()
                 })
@@ -66,5 +66,4 @@ def handler404(request, exception=None):
         'form': form,
         'populated_city_reports': get_populated_city_reports()
     })
-
 
