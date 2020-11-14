@@ -1,8 +1,8 @@
-# aqrn.org
+# aqrn: air quality right now
 
 ## About the project
 
-aqrn.org is an air quality monitoring website in development for a CSC 484 Software Engineering group project at Dakota State University (Fall 2020).
+[aqrn.org](https://aqrn.org) is an air quality monitoring website in development for a CSC 484 Software Engineering group project at Dakota State University (Fall 2020).
 
 ## Documentation
 
