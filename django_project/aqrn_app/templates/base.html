@@ -4,9 +4,41 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>aqrn</title>
+        <title>aqrn: air quality right now</title>
         <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" media="all">
+
+        <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;1,100;1,300&display=swap" rel="stylesheet">
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHQJMHX3WY"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-SHQJMHX3WY');
+        </script>
+
+        <!-- Primary Meta Tags -->
+        <title>aqrn</title>
+        <meta name="title" content="aqrn">
+        <meta name="description" content="air quality right now">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://aqrn.org/">
+        <meta property="og:title" content="aqrn">
+        <meta property="og:description" content="air quality right now">
+        <meta property="og:image" content="https://aqrn.org/static/meta-img-alt.jpg">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://aqrn.org/">
+        <meta property="twitter:title" content="aqrn">
+        <meta property="twitter:description" content="air quality right now">
+        <meta property="twitter:image" content="https://aqrn.org/static/meta-img-alt.jpg">
+
     </head>
     <body class="{{ body_classes }}">
 

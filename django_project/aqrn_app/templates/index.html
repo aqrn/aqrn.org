@@ -25,9 +25,13 @@
     </form>
 
     {% if no_result %}
-        <p id="no-result">{{ no_result }}</p>
+        <p id="no-result">
+            {% autoescape off %}
+            {{ no_result }}
+            {% endautoescape %}
+        </p>
     {% elif not city %}
-        <p>Enter a zip code for the <strong>air quality right now.</strong></p>
+        <p>Enter a U.S. zip code for the <strong>air quality right now.</strong></p>
     {% else %}
         <p id="reporting-area">{{ city.reporting_area }}, {{ city.state_code }}</p>
         <ul id="full-report">
