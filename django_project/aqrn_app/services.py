@@ -119,7 +119,7 @@ def generate_color_key_html():
 def get_advisory(cat_num):
     advisory = {
         1: "",
-        2: "Unusually sensitive individuals should consider limiting prolonged outdoor exertion",
+        2: "Unusually sensitive individuals should consider limiting prolonged outdoor exertion.",
         3: "Children, active adults, and people with respiratory disease, such as asthma, "
            "should limit prolonged outdoor exertion.",
         4: "Children, active adults, and people with respiratory disease, such as asthma,"
