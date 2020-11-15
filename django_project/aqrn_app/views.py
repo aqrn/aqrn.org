@@ -5,6 +5,7 @@ from .services import City, get_populated_city_reports, get_historical_report, g
 from .forms import ZipCodeForm
 from django.http import Http404
 from django.shortcuts import redirect
+from datetime import datetime
 
 
 def home(request, zip_param=None):
@@ -56,6 +57,12 @@ def home(request, zip_param=None):
         'form': form,
         'populated_city_reports': get_populated_city_reports(),
         'color_key': generate_color_key_html()
+    })
+
+
+def sitemap(request):
+    return render(request, 'sitemap.xml', {
+        'today':  datetime.today().strftime("%Y-%m-%d")
     })
 
 

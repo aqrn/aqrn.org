@@ -1,4 +1,4 @@
-"""aqrn_project URL Configuration
+"""django_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -21,9 +21,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sitemap/', views.sitemap, name='sitemap'),
     path('', views.home, name='home'),
     re_path(r'^(?P<zip_param>[0-9]{5})/$', views.home)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = views.handler404
-
