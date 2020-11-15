@@ -258,6 +258,11 @@ p#reporting-area {
 div#main-city-data p#advisory {
   font-weight: 300;
   text-align: left;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 80%;
+  padding: 1em;
+  border-radius: 0.5em;
+  margin-bottom: 0;
 }
 
 div#main-city-data p#updated {
@@ -334,6 +339,14 @@ div#historical p {
 
 .axis.y path, .axis.x path {
   display: none;
+}
+
+svg text {
+  font-family: "Roboto";
+}
+
+.axis.x text {
+  font-weight: 300;
 }
 
 .tooltip {

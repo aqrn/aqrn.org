@@ -116,20 +116,22 @@ def generate_color_key_html():
     key_html = key_html.replace("Unhealthy for Sensitive Groups", "Mildly Unhealthy")
     return key_html
 
+
 def get_advisory(cat_num):
     advisory = {
+        # 1: "Air quality is satisfactory, and air pollution poses little or no risk.",
         1: "",
-        2: "Unusually sensitive individuals should consider limiting prolonged outdoor exertion.",
-        3: "Children, active adults, and people with respiratory disease, such as asthma, "
-           "should limit prolonged outdoor exertion.",
-        4: "Children, active adults, and people with respiratory disease, such as asthma,"
-           "should avoid prolonged outdoor exertion; everyone else should limit prolonged "
-           "outdoor exertion.",
-        5: "Children, active adults, and people with respiratory disease, such as asthma, "
-           "should avoid outdoor exertion; everyone else should limit outdoor exertion.",
-        6: "Everyone should avoid all physical activity outdoors."
+        2: "Air quality is acceptable. However, there may be a risk for some people, particularly those who are "
+           "unusually sensitive to air pollution.",
+        3: "Members of sensitive groups may experience health effects. The general public is less likely to be "
+           "affected.",
+        4: "Some members of the general public may experience health effects; members of sensitive groups may "
+           "experience more serious health effects.",
+        5: "Health alert: The risk of health effects is increased for everyone.",
+        6: "Health warning of emergency conditions: everyone is more likely to be affected."
     }
     return advisory.get(cat_num, "")
+
 
 class City:
     def __init__(self, zip_code):

@@ -13,7 +13,7 @@
     }
     // console.log(data);
 
-    const margin = {top: 30, right: 20, bottom: 30, left: 30},
+    const margin = {top: 30, right: 20, bottom: 30, left: 26},
         height = 300 - margin.top - margin.bottom,
         width = 400 - margin.left - margin.right;
 
@@ -47,6 +47,9 @@
     svg.append("g").attr("class", "axis x")
         .attr("transform", `translate(${margin.left}, ${height + margin.top})`)
         .call(xAxis);
+    d3.selectAll("text")
+        .attr("font-family", "Roboto")
+        .attr("font-size", "1em");
 
     // Create path generator
     let line = d3.line()
@@ -59,7 +62,7 @@
         .append("path").attr("d", line(data))
         .attr("fill", "none")
         .attr("stroke", "rgba(255,255,255,.4)")
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 3);
 
     // Add circle nodes to chart
     let circles = svg.append("g").attr("class", "nodes")

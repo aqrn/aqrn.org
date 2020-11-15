@@ -51,7 +51,7 @@ input#id_zip_code {
 .forecast input#id_zip_code {
     color: #fff;
     border: none;
-    border-bottom: 3px solid rgba(255, 255, 255, .3);
+    border-bottom: 3px solid rgba(255,255,255,.3);
 }
 
 input#id_zip_code::placeholder {
@@ -160,7 +160,7 @@ ul#populated-cities li a span {
     font-weight: 300;
 }
 
-// Assign correct background color to li elements
+// Assign correct border color to li elements
 @each $class, $color in $cat-colors {
   ul#populated-cities li.#{$class} {
     border-color: rgba($color, 1);
@@ -239,6 +239,11 @@ p#reporting-area {
 div#main-city-data p#advisory {
     font-weight: 300;
     text-align: left;
+    background: rgba(255,255,255,.08);
+    font-size: 80%;
+    padding: 1em;
+    border-radius: .5em;
+    margin-bottom: 0;
 }
 
 div#main-city-data p#updated {
@@ -317,6 +322,13 @@ div#historical p {
     display: none;
 }
 
+svg text {
+    font-family: "Roboto";
+}
+
+.axis.x text {
+    font-weight: 300;
+}
 
 .tooltip {
     display: none;
