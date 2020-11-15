@@ -4,7 +4,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>aqrn: air quality right now</title>
+        {% if city.reporting_area %}
+            <title>aqrn - {{ city.reporting_area }}, {{ city.state_code }}</title>
+
+        {% else %}
+            <title>aqrn - air quality right now</title>
+        {% endif %}
         <meta name="description" content="air quality right now">
         <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" media="all">
 
