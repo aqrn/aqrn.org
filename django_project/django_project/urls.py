@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sitemap/', views.sitemap, name='sitemap'),
+    path('sitemap.xml', views.sitemap, name='sitemap'),
     path('', views.home, name='home'),
     re_path(r'^(?P<zip_param>[0-9]{5})/$', views.home)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
