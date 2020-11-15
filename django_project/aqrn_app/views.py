@@ -60,10 +60,10 @@ def home(request, zip_param=None):
 
 
 def handler404(request, exception=None):
-    form = ZipCodeForm()
+    return redirect('/')
 
-    return render(request, '404.html', {
-        'form': form,
-        'populated_city_reports': get_populated_city_reports()
-    })
-
+    # form = ZipCodeForm()
+    # return render(request, '404.html', {
+    #     'form': form,
+    #     'populated_city_reports': get_populated_city_reports()
+    # })
