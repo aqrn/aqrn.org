@@ -63,7 +63,7 @@ def home(request, zip_param=None):
 def sitemap(request):
     return render(request, 'sitemap.xml', {
         'today':  datetime.today().strftime("%Y-%m-%d")
-    })
+    }, content_type='application/xml')
 
 
 def handler404(request, exception=None):
