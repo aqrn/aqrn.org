@@ -117,6 +117,22 @@ def generate_color_key_html():
     return key_html
 
 
+def get_advisory(cat_num):
+    advisory = {
+        # 1: "Air quality is satisfactory, and air pollution poses little or no risk.",
+        1: "",
+        2: "Air quality is acceptable. However, there may be a risk for some people, particularly those who are "
+           "unusually sensitive to air pollution.",
+        3: "Members of sensitive groups may experience health effects. The general public is less likely to be "
+           "affected.",
+        4: "Some members of the general public may experience health effects; members of sensitive groups may "
+           "experience more serious health effects.",
+        5: "Health alert: The risk of health effects is increased for everyone.",
+        6: "Health warning of emergency conditions: everyone is more likely to be affected."
+    }
+    return advisory.get(cat_num, "")
+
+
 class City:
     def __init__(self, zip_code):
         self.realtime_json, self.used_cache = get_realtime_report(zip_code)
@@ -124,6 +140,7 @@ class City:
         self.max_cat = -1
         self.full_report = []
         self.zip_code = int(zip_code)
+        self.advisory = ""
 
         if len(self.realtime_json) < 1:
             return
@@ -134,6 +151,7 @@ class City:
             report_time_zone = self.realtime_json[0]["LocalTimeZone"]
             self.report_time = report_hour + " " + report_time_zone
             self.parse_pollutants()
+            self.advisory = get_advisory(self.max_cat)
 
     def parse_pollutants(self):
         cat_lookup = get_categories()

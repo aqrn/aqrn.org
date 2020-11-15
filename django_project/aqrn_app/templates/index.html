@@ -34,12 +34,21 @@
         <p>Enter a U.S. zip code for the <strong>air quality right now.</strong></p>
     {% else %}
         <p id="reporting-area">{{ city.reporting_area }}, {{ city.state_code }}</p>
+
         <ul id="full-report">
             {% for x in city.full_report %}
                 <li><span>{{ x.pollutant }}:</span> {{ x.pollutant_aqi }} ({{ x.cat_name }})</li>
             {% endfor %}
         </ul>
+
         <p id="updated">Last updated: <strong>{{ city.report_time }}</strong></p>
+
+        {% if city.advisory %}
+            <p id="advisory">
+                {{city.advisory}}
+            </p>
+        {% endif %}
+
         <div id="historical">
             {% if historical_report != None %}
                 <div class="chart">
@@ -50,7 +59,6 @@
                 <p>Historical data not available for <strong>{{ city.zip_code }}</strong>.</p>
             {% endif %}
         </div>
-
 
     {% endif %}
 </div>
