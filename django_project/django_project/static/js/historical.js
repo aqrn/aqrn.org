@@ -95,25 +95,28 @@
     circles.on('mouseover', function(event, d) {
         const e = circles.nodes();
         const i = e.indexOf(this);
+
         let the_date = "";
-        if (i === e.length - 1) {
-            the_date = "Today's"
-        }
-        else {
-            the_date = `${d.date.getMonth() + 1}/${d.date.getDate()}`
-        }
+        if (i === e.length - 1)
+            the_date = "Current";
+        else
+            the_date = `${d.date.getMonth() + 1}/${d.date.getDate()} peak`;
+
         d3.select(".tooltip")
             .classed("show", true)
             .html(`${the_date} AQI: <span>${d.aqi}</span>`)
             .style("top", `${event.pageY - 50}px`)
             .style("left", `${event.pageX - 50}px`)
 
-        d3.select(this).classed("hover", true);
+        d3.select(this)
+            .attr("r", 5);
 
     })
     .on('mouseout', function() {
         tooltip.classed("show", false)
-        d3.select(this).classed("hover", false);
+
+        d3.select(this)
+            .attr("r", 4);
     })
     .on('mousemove', function(event, d) {
         d3.select(".tooltip")
