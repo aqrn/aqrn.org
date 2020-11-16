@@ -345,6 +345,7 @@ svg text {
     padding: 0.5em 1em;
     margin-top: -20px;
     border-radius: 5px;
+    font-size: 80%;
 }
 
 .tooltip span {
@@ -355,6 +356,14 @@ svg text {
     display: block;
     position: absolute;
     pointer-events: none;
+}
+
+circle {
+    fill: #eee;
+}
+
+circle:hover {
+    fill: #fff;
 }
 
 // Loader animation
