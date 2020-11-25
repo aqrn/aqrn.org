@@ -9,10 +9,10 @@ requests_cache.install_cache(cache_name="air_now_cache", expire_after=3600)
 
 
 def get_populated_city_reports(main_city=None):
-    # most populated cities
+    # Most populated cities
     zip_codes = [10001, 90001, 60007, 77001, 19019, 85006, 91945, 78006, 75001, 94088, 78701]
 
-    # most polluted cities
+    # Most polluted cities
     zip_codes += [99703, 15106, 84044, 440101, 93256, 97301]
 
     random.shuffle(zip_codes)
@@ -26,6 +26,7 @@ def get_populated_city_reports(main_city=None):
 
 
 def get_realtime_report(zip_code):
+    """Returns realtime air quality data"""
     resp_format = "application/json"
     distance = 100
 
@@ -38,16 +39,13 @@ def get_realtime_report(zip_code):
 
     json_object = json.loads(r.text)
 
-    # Dummy Json codes to test parse_realtime_report to ensure that "Unhealthy for Sensitive Groups is changed
-    # to "Mildly Unhealthy"
-    # json_object = json.loads('[{"DateObserved":"2020-11-10 ","HourObserved":8,"LocalTimeZone":"EST", \
-    # "ReportingArea":"New York City Region","StateCode":"NY","Latitude":40.8419,"Longitude":-73.8359,\
-    # "ParameterName":"O3","AQI":9,"Category":{"Number":3,"Name":"Unhealthy for Sensitive Groups"}}]')
-
-    return json_object, r.from_cache
+    # Return JSON response, whether or not the cache was used
+    # and the response code
+    return json_object, r.from_cache, r.status_code
 
 
 def get_historical_report(city):
+    """Returns peak AQI values from previous days"""
     zip_code = city.zip_code
     historical_report = []
 
@@ -90,6 +88,7 @@ def get_historical_report(city):
 
 
 def get_categories():
+    """Category name/number lookup table"""
     return {
         "Good": 1,
         "Moderate": 2,
@@ -107,6 +106,7 @@ def get_categories():
 
 
 def generate_color_key_html():
+    """Produces HTML for slide-out color key"""
     categories = get_categories()
     key_html = '<ul id="color-key">'
     for i in range(1, 7):
@@ -118,6 +118,7 @@ def generate_color_key_html():
 
 
 def get_advisory(cat_num):
+    """Returns health recommendation for category"""
     advisory = {
         # 1: "Air quality is satisfactory, and air pollution poses little or no risk.",
         1: "",
@@ -134,26 +135,50 @@ def get_advisory(cat_num):
 
 
 class City:
+    """Requests and stores realtime air quality data for a U.S. city"""
     def __init__(self, zip_code):
-        self.realtime_json, self.used_cache = get_realtime_report(zip_code)
+        self.realtime_json, self.used_cache, self.response_code = get_realtime_report(zip_code)
         self.max_aqi = -1
         self.max_cat = -1
         self.full_report = []
         self.zip_code = int(zip_code)
         self.advisory = ""
 
-        if len(self.realtime_json) < 1:
+        if self.response_code == 429:
+            # API limit reached
+            return
+        elif len(self.realtime_json) < 1:
+            # Report is empty
             return
         else:
-            self.reporting_area = self.realtime_json[0]["ReportingArea"]
-            self.state_code = self.realtime_json[0]["StateCode"]
-            report_hour = str(self.realtime_json[0]["HourObserved"])
-            report_time_zone = self.realtime_json[0]["LocalTimeZone"]
-            self.report_time = report_hour + " " + report_time_zone
-            self.parse_pollutants()
-            self.advisory = get_advisory(self.max_cat)
+            # Get reporting area
+            # from first pollutant in the report
+            data = self.realtime_json[0]
+            self.reporting_area = data.get("ReportingArea")
+
+            if self.reporting_area:
+                self.state_code = data.get("StateCode")
+                report_hour = data.get("HourObserved")
+                report_time_zone = data.get("LocalTimeZone")
+                if report_hour and report_time_zone:
+                    self.report_time = str(report_hour) + " " + report_time_zone
+                self.parse_pollutants()
+                self.advisory = get_advisory(self.max_cat)
+            else:
+                # Something else went wrong -- reporting area should be present
+                return
 
     def parse_pollutants(self):
+        """Builds self.full_report list pollutant objects
+
+        This method stores a list of objects,
+        one for each pollutant available in the report.
+        Each object contains the pollutant name, AQI value,
+        category name, and category number.
+
+        In the process, it uses the highest AQI as
+        the overall/main AQI value (self.max_aqi)
+        """
         cat_lookup = get_categories()
 
         # Cycle through pollutants in realtime report

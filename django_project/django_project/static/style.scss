@@ -116,7 +116,6 @@ input[type=number] {
     color: #fff;
 }
 
-
 // Assign background color to each cat class (.cat1 thru .cat6)
 @each $class, $color in $cat-colors {
     .#{$class} {
@@ -158,7 +157,7 @@ ul#populated-cities li a {
     padding: 1em;
     box-sizing: border-box;
     display: block;
-    transition: opacity .2s ease-in-out;
+    transition: opacity .3s ease-in-out;
     opacity: .95;
     text-align: center;
     font-weight: 100;
@@ -176,12 +175,12 @@ ul#populated-cities li a span {
 }
 
 ul#populated-cities li {
-    border-bottom: 1px solid;
+    border-bottom: 0px solid;
     background: none;
 }
 
 ul#populated-cities li a:hover {
-    opacity: .9;
+    opacity: .85;
 }
 
 // Color key list

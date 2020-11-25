@@ -161,7 +161,7 @@ ul#populated-cities li a {
   padding: 1em;
   box-sizing: border-box;
   display: block;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   opacity: 0.95;
   text-align: center;
   font-weight: 100;
@@ -196,12 +196,12 @@ ul#populated-cities li.cat6 {
 }
 
 ul#populated-cities li {
-  border-bottom: 1px solid;
+  border-bottom: 0px solid;
   background: none;
 }
 
 ul#populated-cities li a:hover {
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 ul#color-key {
