@@ -56,7 +56,7 @@
                     {{ historical_report | json_script:"historical_json" }}
                 </div>
             {% else %}
-                <p>Historical currently unavailable for <strong>{{ city.zip_code }}</strong>.</p>
+                <p>Historical data currently unavailable for <strong>{{ city.zip_code }}</strong>.</p>
             {% endif %}
         </div>
 
