@@ -9,7 +9,6 @@ from datetime import datetime
 
 
 def home(request, zip_param=None):
-
     # Process form data if POST request or zip is passed via URL
     if request.method == 'POST' or zip_param is not None:
 
@@ -30,9 +29,15 @@ def home(request, zip_param=None):
             try:
                 city = City(zip_code)
             except Exception as e:
-                raise Http404(e)
+                # Unable to init City object
+                return render(request, 'index.html', {
+                    'no_result': f'<strong>We\'re sorry, something went wrong. </strong>'
+                                 'Please check back&nbsp;soon.',
+                    'color_key': generate_color_key_html()
+                })
 
             if city.max_aqi != -1:
+                # All is good -- city object has data
                 body_classes = 'forecast cat' + str(city.max_cat)
                 return render(request, 'index.html', {
                     'form': form,
@@ -42,7 +47,15 @@ def home(request, zip_param=None):
                     'historical_report': get_historical_report(city),
                     'color_key': generate_color_key_html()
                 })
+            elif city.response_code == 429:
+                # API limit reached
+                return render(request, 'index.html', {
+                    'no_result': f'The site is temporarily unavailable due to a high volume of requests. '
+                                 '<strong>Please try again in an&nbsp;hour.</strong>',
+                    'color_key': generate_color_key_html()
+                })
             else:
+                # API returned with nothing
                 return render(request, 'index.html', {
                     'form': form,
                     'no_result': f'No results found for <strong>{zip_code}</strong>.',
@@ -62,7 +75,7 @@ def home(request, zip_param=None):
 
 def sitemap(request):
     return render(request, 'sitemap.xml', {
-        'today':  datetime.today().strftime("%Y-%m-%d")
+        'today': datetime.today().strftime("%Y-%m-%d")
     }, content_type='application/xml')
 
 
