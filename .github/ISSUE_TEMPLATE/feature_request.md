@@ -1,5 +1,5 @@
 ---
-name: Feature request
+name: Feature Request
 about: Suggest a feature we should add to aqrn.org
 title: ''
 labels: ''
